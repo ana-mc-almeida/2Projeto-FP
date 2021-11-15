@@ -74,7 +74,7 @@ def posicoes_iguais(posicao1, posicao2):
     posicoes_iguais: posicao x posicao -> booleano
 
     Devolve True caso os argumentos dados sejam posições iguais.
-    Caso contrário, Devolve False.
+    Caso contrário, devolve False.
     '''
     return eh_posicao(posicao1) and eh_posicao(posicao2) and posicao2 == posicao1
 
@@ -107,6 +107,8 @@ def obter_posicoes_adjacentes(posicao):
 def ordenar_posicoes(posicoes):
     '''
     ordenar_posicoes: tuplo -> tuplo
+
+    Devolve um tuplo com posições ordenadas por ordem de leitura do prado.
     '''
     return sorted(posicoes, key=lambda posicao: (obter_pos_y(posicao), obter_pos_x(posicao)))
 
@@ -115,151 +117,238 @@ def ordenar_posicoes(posicoes):
 #
 
 
+def valida_cria_animal(especie, freq_reproducao, freq_alimentacao):
+    '''
+    valida_cria_animal: universal,  universal,  universal -> booleano
+
+
+    '''
+    return is_str_n_nula(especie) and is_int_positivo(freq_reproducao) and (type(freq_alimentacao) == int and freq_alimentacao >= 0)
+
+
 def cria_animal(especie, freq_reproducao, freq_alimentacao):
     '''
     cria_animal: str, int, int -> animal
+
+    Devolve o animal correspondente às informações recebidas.
     '''
-    if is_str_n_nula(especie) and is_int_positivo(freq_reproducao) and (type(freq_alimentacao) == int and freq_alimentacao >= 0):
-        return {"especie": especie, "idade": 0, "freq_reproducao": freq_reproducao, "fome": 0, "freq_reproducao": freq_reproducao}
+    if valida_cria_animal(especie, freq_reproducao, freq_alimentacao):
+        return {"especie": especie, "idade": 0, "freq_alimentacao": freq_alimentacao, "fome": 0, "freq_reproducao": freq_reproducao}
     argumentos_invalidos("cria_animal")
 
 
 def cria_copia_animal(animal):
     '''
     cria_copia_animal: animal -> animal
+
+    Devolve uma cópia do animal recebido.
     '''
     return animal.copy()
 
 
-def obter_especie():
+def obter_especie(animal):
     '''
     obter_especie: animal -> str
+
+    Devolve a espécie do animal recebido.
     '''
-    pass
+    return animal["especie"]
 
 
-def obter_freq_reproducao():
+def obter_freq_reproducao(animal):
     '''
     obter_freq_reproducao: animal -> int
+
+    Devolve a frequência de reprodução do animal recebido.
     '''
-    pass
+    return animal["freq_reproducao"]
 
 
-def obter_freq_alimentaca():
+def obter_freq_alimentacao(animal):
     '''
-    obter_freq_alimentaca: animal -> int
+    obter_freq_alimentacao: animal -> int
+
+    Devolve a frequência de alimentação do animal recebido.
     '''
-    pass
+    return animal["freq_alimentacao"]
 
 
 def obter_idade(animal):
     '''
     obter_idade: animal -> int
+
+    Devolve a idade do animal recebido.
     '''
-    pass
+    return animal["idade"]
 
 
 def obter_fome(animal):
     '''
     obter_fome: animal -> int
+
+    Devolve a fome do animal recebido.
     '''
-    pass
+    return animal["fome"]
 
 
 def aumenta_idade(animal):
     '''
     aumenta_idade: animal -> animal
+
+    Devolve o animal dado, com mais 1 de idade.
     '''
-    pass
+    animal["idade"] += 1
+    return animal
 
 
 def reset_idade(animal):
     '''
     reset_idade: animal -> animal
+
+    Devolve o animal dado, alterando a sua idade para 0.
     '''
-    pass
+    animal["idade"] = 0
+    return animal
+
+
+def eh_animal(arg):
+    '''
+    eh_animal: universal -> booleano
+
+    Devolve True caso o argumento dado seja um TAD animal.
+    Caso contrário, devolve False.
+    '''
+    if type(arg) == dict and len(arg) == 5 and {"especie", "idade", "fome", "freq_alimentacao", "freq_reproducao"} <= arg.keys():
+        return valida_cria_animal(obter_especie(arg), obter_freq_reproducao(arg), obter_freq_alimentacao(arg)) and is_int_positivo(obter_fome(arg)) and is_int_positivo(obter_idade(arg))
+    return False
+
+
+def eh_predador(arg):
+    '''
+    eh_predador: universal -> booleano
+
+    Devolve True caso o argumento dado seja um TAD animal do tipo predador.
+    Caso contrário, devolve False.
+    '''
+    return eh_animal(arg) and obter_freq_alimentacao(arg) > 0
+
+
+def eh_presa(arg):
+    '''
+    eh_presa: universal -> booleano
+
+    Devolve True caso o argumento dado seja um TAD animal do tipo presa.
+    Caso contrário, devolve False.
+    '''
+    return eh_animal(arg) and obter_freq_alimentacao(arg) == 0
 
 
 def aumenta_fome(animal):
     '''
     aumenta_fome: animal -> animal
+
+    Devolve o animal dado com mais 1 de fome, caso seja predador.
+    Caso seja presa, o animal não é alterado.
     '''
-    pass
+    if eh_predador(animal):
+        animal["fome"] += 1
+    return animal
 
 
 def reset_fome(animal):
     '''
     reset_fome: animal -> animal
+
+    Devolve o animal dado, alterando a sua fome para 0, caso seja predador.
+    Caso seja presa, o animal não é alterado.
     '''
-    pass
+    if eh_predador(animal):
+        animal["fome"] = 0
+    return animal
 
 
-def eh_animal():
-    '''
-    eh_animal: animal -> int
-    '''
-    pass
-
-
-def eh_predador():
-    '''
-    eh_predador: universal -> booleano
-    '''
-    pass
-
-
-def eh_presa():
-    '''
-    eh_presa: universal -> booleano
-    '''
-    pass
-
-
-def animais_iguais():
+def animais_iguais(animal1, animal2):
     '''
     animais_iguais: animal, animal -> booleano
+
+    Devolve True caso os argumentos dados sejam animais iguais.
+    Caso contrário, devolve False.
     '''
-    pass
+    return animal1 == animal2
 
 
 def animal_para_char(animal):
     '''
     animal_para_char: animal -> str
+
+    Devolve o primeiro caracter da espécie do animal recebido.
+    Caso este animal seja um predador o caracter será maiúsculo.
+    Caso contrário, o caracter será minúsculo.
     '''
-    pass
+    especie = obter_especie(animal)
+    if eh_predador(animal):
+        return especie[0].upper()
+    return especie[0].lower()
 
 
 def animal_para_str(animal):
     '''
     animal_para_str: animal -> str
+
+    Devolve a string que representa o animal, no seguinte formato:
+    - Caso seja predador: <especie> [<idade>/<frequência de reprodução>;<fome>/<frequência de alimentação>]
+    - Caso seja presa: <especie> [<idade>/<frequência de reprodução>]
     '''
-    pass
+    result = f"{obter_especie(animal)} [{obter_idade(animal)}/{obter_freq_reproducao(animal)}"
+
+    if eh_predador(animal):
+        result = f"{result};{obter_fome(animal)}/{obter_freq_alimentacao(animal)}"
+
+    result = f"{result}]"
+
+    return result
 
 
 def eh_animal_fertil(animal):
     '''
     eh_animal_fertil: animal -> booleano
+
+    Devolve True caso o animal dado tenha atingido a idade de reprodução.
+    Caso contrário, devolve False.
     '''
-    pass
+    return obter_idade(animal) >= obter_freq_reproducao(animal)
 
 
 def eh_animal_faminto(animal):
     '''
     eh_animal_faminto: animal -> booleano
+
+    Devolve True caso o animal dado tenha um valor de fome igual ou superior à sua frequência de alimentação.
+    Caso contrário, devolve False.
     '''
-    pass
+    if eh_presa(animal):
+        return False
+    return obter_fome(animal) >= obter_freq_alimentacao(animal)
 
 
 def reproduz_animal(animal):
     '''
     reproduz_animal: animal -> animal
+
+    Devolve um novo animal da mesma espécie do animal recebido, idade e fome igual a 0.
+    Modifica destrutivamente animal recebido, alterando a sua idade para 0.
     '''
-    pass
+    novo_animal = cria_copia_animal(animal)
+    novo_animal = reset_fome(novo_animal)
+    novo_animal = reset_idade(novo_animal)
+    animal = reset_idade(animal)
+    return novo_animal
 
 
 #
 # TAD prado
 #
+
 
 def cria_prado():
     '''

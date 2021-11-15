@@ -1,0 +1,8 @@
+AINDA TENHO DE FAZER:
+    Doc_string in "valida_cria_animal"
+
+
+
+DÚVIDAS:
+    Posso usar a função "argumentos_invalidos"?
+    Posso usar a função "valida_cria_animal" dentro da função "eh_animal"?
