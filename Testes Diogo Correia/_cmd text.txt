@@ -1,0 +1,2 @@
+g:
+cd G:\My Drive\Escola\LEIC 1\1º Semestre\Fundamentos da Programação\2Projeto-FP\Testes Diogo Correia

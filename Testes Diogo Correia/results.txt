@@ -1,0 +1,209 @@
+..EEEEF.EEEEEE.
+======================================================================
+ERROR: test_animal_para_char (__main__.TestTADAnimal) (name='rabbit', r=5, a=0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "G:\My Drive\Escola\LEIC 1\1º Semestre\Fundamentos da Programação\2Projeto-FP\Testes Diogo Correia\proj_tester.py", line 99, in test_animal_para_char
+    animal = target.cria_animal(name, r, a)
+TypeError: cria_animal() takes 0 positional arguments but 3 were given
+
+======================================================================
+ERROR: test_animal_para_char (__main__.TestTADAnimal) (name='fox', r=20, a=10)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "G:\My Drive\Escola\LEIC 1\1º Semestre\Fundamentos da Programação\2Projeto-FP\Testes Diogo Correia\proj_tester.py", line 99, in test_animal_para_char
+    animal = target.cria_animal(name, r, a)
+TypeError: cria_animal() takes 0 positional arguments but 3 were given
+
+======================================================================
+ERROR: test_animal_para_str (__main__.TestTADAnimal) (name='rabbit', r=5, a=0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "G:\My Drive\Escola\LEIC 1\1º Semestre\Fundamentos da Programação\2Projeto-FP\Testes Diogo Correia\proj_tester.py", line 89, in test_animal_para_str
+    animal = target.cria_animal(name, r, a)
+TypeError: cria_animal() takes 0 positional arguments but 3 were given
+
+======================================================================
+ERROR: test_animal_para_str (__main__.TestTADAnimal) (name='fox', r=20, a=10)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "G:\My Drive\Escola\LEIC 1\1º Semestre\Fundamentos da Programação\2Projeto-FP\Testes Diogo Correia\proj_tester.py", line 89, in test_animal_para_str
+    animal = target.cria_animal(name, r, a)
+TypeError: cria_animal() takes 0 positional arguments but 3 were given
+
+======================================================================
+ERROR: test_aumenta_fome_predador (__main__.TestTADAnimal)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "G:\My Drive\Escola\LEIC 1\1º Semestre\Fundamentos da Programação\2Projeto-FP\Testes Diogo Correia\proj_tester.py", line 144, in test_aumenta_fome_predador
+    animal = target.cria_animal("fox", 20, 10)
+TypeError: cria_animal() takes 0 positional arguments but 3 were given
+
+======================================================================
+ERROR: test_aumenta_fome_presa (__main__.TestTADAnimal)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "G:\My Drive\Escola\LEIC 1\1º Semestre\Fundamentos da Programação\2Projeto-FP\Testes Diogo Correia\proj_tester.py", line 150, in test_aumenta_fome_presa
+    animal = target.cria_animal("rabbit", 7, 0)
+TypeError: cria_animal() takes 0 positional arguments but 3 were given
+
+======================================================================
+ERROR: test_aumenta_idade (__main__.TestTADAnimal)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "G:\My Drive\Escola\LEIC 1\1º Semestre\Fundamentos da Programação\2Projeto-FP\Testes Diogo Correia\proj_tester.py", line 138, in test_aumenta_idade
+    animal = target.cria_animal("fox", 20, 10)
+TypeError: cria_animal() takes 0 positional arguments but 3 were given
+
+======================================================================
+ERROR: test_cria_animal (__main__.TestTADAnimal) (name='rabbit', r=5, a=0)
+Testa um animal e verifica que os seletores e reconhecedores retornam
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "G:\My Drive\Escola\LEIC 1\1º Semestre\Fundamentos da Programação\2Projeto-FP\Testes Diogo Correia\proj_tester.py", line 113, in test_cria_animal
+    animal = target.cria_animal(name, r, a)
+TypeError: cria_animal() takes 0 positional arguments but 3 were given
+
+======================================================================
+ERROR: test_cria_animal (__main__.TestTADAnimal) (name='fox', r=20, a=10)
+Testa um animal e verifica que os seletores e reconhecedores retornam
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "G:\My Drive\Escola\LEIC 1\1º Semestre\Fundamentos da Programação\2Projeto-FP\Testes Diogo Correia\proj_tester.py", line 113, in test_cria_animal
+    animal = target.cria_animal(name, r, a)
+TypeError: cria_animal() takes 0 positional arguments but 3 were given
+
+======================================================================
+ERROR: test_cria_animal_fail (__main__.TestTADAnimal) [Testing with r <= 0 or a < 0:] (r=0, a=5)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "G:\My Drive\Escola\LEIC 1\1º Semestre\Fundamentos da Programação\2Projeto-FP\Testes Diogo Correia\proj_tester.py", line 78, in test_cria_animal_fail
+    target.cria_animal('rabbit', -1, 2)
+TypeError: cria_animal() takes 0 positional arguments but 3 were given
+
+======================================================================
+ERROR: test_cria_animal_fail (__main__.TestTADAnimal) [Testing with r <= 0 or a < 0:] (r=0, a=0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "G:\My Drive\Escola\LEIC 1\1º Semestre\Fundamentos da Programação\2Projeto-FP\Testes Diogo Correia\proj_tester.py", line 78, in test_cria_animal_fail
+    target.cria_animal('rabbit', -1, 2)
+TypeError: cria_animal() takes 0 positional arguments but 3 were given
+
+======================================================================
+ERROR: test_cria_animal_fail (__main__.TestTADAnimal) [Testing with r <= 0 or a < 0:] (r=-3, a=3)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "G:\My Drive\Escola\LEIC 1\1º Semestre\Fundamentos da Programação\2Projeto-FP\Testes Diogo Correia\proj_tester.py", line 78, in test_cria_animal_fail
+    target.cria_animal('rabbit', -1, 2)
+TypeError: cria_animal() takes 0 positional arguments but 3 were given
+
+======================================================================
+ERROR: test_cria_animal_fail (__main__.TestTADAnimal) [Testing with r <= 0 or a < 0:] (r=-1, a=0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "G:\My Drive\Escola\LEIC 1\1º Semestre\Fundamentos da Programação\2Projeto-FP\Testes Diogo Correia\proj_tester.py", line 78, in test_cria_animal_fail
+    target.cria_animal('rabbit', -1, 2)
+TypeError: cria_animal() takes 0 positional arguments but 3 were given
+
+======================================================================
+ERROR: test_cria_copia_animal (__main__.TestTADAnimal) (name='rabbit', r=5, a=0)
+Relembra-se que a cópia não pode ser o mesmo objeto que o original,
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "G:\My Drive\Escola\LEIC 1\1º Semestre\Fundamentos da Programação\2Projeto-FP\Testes Diogo Correia\proj_tester.py", line 132, in test_cria_copia_animal
+    animal1 = target.cria_animal(name, r, a)
+TypeError: cria_animal() takes 0 positional arguments but 3 were given
+
+======================================================================
+ERROR: test_cria_copia_animal (__main__.TestTADAnimal) (name='fox', r=20, a=10)
+Relembra-se que a cópia não pode ser o mesmo objeto que o original,
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "G:\My Drive\Escola\LEIC 1\1º Semestre\Fundamentos da Programação\2Projeto-FP\Testes Diogo Correia\proj_tester.py", line 132, in test_cria_copia_animal
+    animal1 = target.cria_animal(name, r, a)
+TypeError: cria_animal() takes 0 positional arguments but 3 were given
+
+======================================================================
+ERROR: test_cria_posicao_enunciado_alto_nivel (__main__.TestTADPosicao)
+Exemplo enunciado das funções de alto nível
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "G:\My Drive\Escola\LEIC 1\1º Semestre\Fundamentos da Programação\2Projeto-FP\Testes Diogo Correia\proj_tester.py", line 54, in test_cria_posicao_enunciado_alto_nivel
+    tuple(target.posicao_para_str(x) for x in t))
+TypeError: 'NoneType' object is not iterable
+
+======================================================================
+ERROR: test_posicao_mock (__main__.TestTADPosicao)
+Testa as barreiras de abstração do TAD Posição
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "G:\My Drive\Escola\LEIC 1\1º Semestre\Fundamentos da Programação\2Projeto-FP\Testes Diogo Correia\proj_tester.py", line 67, in test_posicao_mock
+    self.test_cria_posicao_enunciado_alto_nivel()
+  File "G:\My Drive\Escola\LEIC 1\1º Semestre\Fundamentos da Programação\2Projeto-FP\Testes Diogo Correia\proj_tester.py", line 54, in test_cria_posicao_enunciado_alto_nivel
+    tuple(target.posicao_para_str(x) for x in t))
+TypeError: 'NoneType' object is not iterable
+
+======================================================================
+ERROR: test_cria_copia_prado (__main__.TestTADPrado)
+Relembra-se que a cópia não pode ser o mesmo objeto que o original,
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "G:\My Drive\Escola\LEIC 1\1º Semestre\Fundamentos da Programação\2Projeto-FP\Testes Diogo Correia\proj_tester.py", line 256, in test_cria_copia_prado
+    an1 = tuple(target.cria_animal('rabbit', 5, 0) for i in range(3))
+  File "G:\My Drive\Escola\LEIC 1\1º Semestre\Fundamentos da Programação\2Projeto-FP\Testes Diogo Correia\proj_tester.py", line 256, in <genexpr>
+    an1 = tuple(target.cria_animal('rabbit', 5, 0) for i in range(3))
+TypeError: cria_animal() takes 0 positional arguments but 3 were given
+
+======================================================================
+ERROR: test_cria_prado (__main__.TestTADPrado)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "G:\My Drive\Escola\LEIC 1\1º Semestre\Fundamentos da Programação\2Projeto-FP\Testes Diogo Correia\proj_tester.py", line 175, in test_cria_prado
+    an1 = tuple(target.cria_animal('rabbit', 5, 0) for i in range(3))
+  File "G:\My Drive\Escola\LEIC 1\1º Semestre\Fundamentos da Programação\2Projeto-FP\Testes Diogo Correia\proj_tester.py", line 175, in <genexpr>
+    an1 = tuple(target.cria_animal('rabbit', 5, 0) for i in range(3))
+TypeError: cria_animal() takes 0 positional arguments but 3 were given
+
+======================================================================
+ERROR: test_eliminar_animal (__main__.TestTADPrado)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "G:\My Drive\Escola\LEIC 1\1º Semestre\Fundamentos da Programação\2Projeto-FP\Testes Diogo Correia\proj_tester.py", line 278, in test_eliminar_animal
+    an1 = tuple(target.cria_animal('rabbit', 5, 0) for i in range(3))
+  File "G:\My Drive\Escola\LEIC 1\1º Semestre\Fundamentos da Programação\2Projeto-FP\Testes Diogo Correia\proj_tester.py", line 278, in <genexpr>
+    an1 = tuple(target.cria_animal('rabbit', 5, 0) for i in range(3))
+TypeError: cria_animal() takes 0 positional arguments but 3 were given
+
+======================================================================
+ERROR: test_inserir_animal (__main__.TestTADPrado)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "G:\My Drive\Escola\LEIC 1\1º Semestre\Fundamentos da Programação\2Projeto-FP\Testes Diogo Correia\proj_tester.py", line 298, in test_inserir_animal
+    an1 = tuple(target.cria_animal('rabbit', 5, 0) for i in range(3))
+  File "G:\My Drive\Escola\LEIC 1\1º Semestre\Fundamentos da Programação\2Projeto-FP\Testes Diogo Correia\proj_tester.py", line 298, in <genexpr>
+    an1 = tuple(target.cria_animal('rabbit', 5, 0) for i in range(3))
+TypeError: cria_animal() takes 0 positional arguments but 3 were given
+
+======================================================================
+ERROR: test_mover_animal (__main__.TestTADPrado)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "G:\My Drive\Escola\LEIC 1\1º Semestre\Fundamentos da Programação\2Projeto-FP\Testes Diogo Correia\proj_tester.py", line 231, in test_mover_animal
+    an1 = tuple(target.cria_animal('rabbit', 5, 0) for i in range(3))
+  File "G:\My Drive\Escola\LEIC 1\1º Semestre\Fundamentos da Programação\2Projeto-FP\Testes Diogo Correia\proj_tester.py", line 231, in <genexpr>
+    an1 = tuple(target.cria_animal('rabbit', 5, 0) for i in range(3))
+TypeError: cria_animal() takes 0 positional arguments but 3 were given
+
+======================================================================
+FAIL: test_cria_posicao_enunciado_basicas (__main__.TestTADPosicao)
+Exemplo enunciado das funções de operações básicas (com mais algumas verificações)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "G:\My Drive\Escola\LEIC 1\1º Semestre\Fundamentos da Programação\2Projeto-FP\Testes Diogo Correia\proj_tester.py", line 44, in test_cria_posicao_enunciado_basicas
+    self.assertEqual("(2, 3)", target.posicao_para_str(p1))
+AssertionError: '(2, 3)' != None
+
+----------------------------------------------------------------------
+Ran 20 tests in 0.025s
+
+FAILED (failures=1, errors=22)
