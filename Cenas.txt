@@ -1,9 +1,7 @@
 AINDA TENHO DE FAZER:
     Doc_string in "valida_cria_animal"
     Doc_string in "cria_prado" e funções internas
-    Validar argumentos "cria_prado"
     Adicionar comentários na "cria_prado"
-    Função "eh_prado"
     Tirar linha "print_prado(prado)"
     "reproduz_animal" está mal feito
     Doc_strings de váaaarias
@@ -13,3 +11,4 @@ AINDA TENHO DE FAZER:
 DÚVIDAS:
     Posso usar a função "argumentos_invalidos"?
     Posso usar a função "valida_cria_animal" dentro da função "eh_animal"?
+    "obter_animal" só pode dar return num animal? e se for um rochedo?

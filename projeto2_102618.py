@@ -364,6 +364,10 @@ def cria_prado(ultima_posicao, rochedos, animais, posicoes_animais):
     cria_prado: posicao, tuplo, tuplo, tuplo -> prado
 
     '''
+    def valida_cria_prado():
+        if not(eh_posicao(ultima_posicao) and type(rochedos) == type(animais) == type(posicoes_animais) and len(animais) == len(posicoes_animais)):
+            argumentos_invalidos("cria_prado")
+
     def criar_estrutura_prado(max_x, max_y):
         for y in range(max_y+1):
             prado.append([])
@@ -383,6 +387,8 @@ def cria_prado(ultima_posicao, rochedos, animais, posicoes_animais):
             prado[obter_pos_y(posicao)][obter_pos_x(posicao)] = animais[i]
         return prado
 
+    valida_cria_prado()
+
     prado = []
     max_x = obter_pos_x(ultima_posicao)
     max_y = obter_pos_y(ultima_posicao)
@@ -401,7 +407,7 @@ def cria_copia_prado(prado):
 
     Devolve uma cópia do prado recebido.
     '''
-    return prado.copy()
+    return [[x for x in linha] for linha in prado]
 
 
 def obter_tamanho_x(prado):
@@ -514,7 +520,7 @@ def eh_prado(prado):
     Devolve True caso o argumento dado seja um TAD prado.
     Caso contrário, devolve False.
     '''
-    pass
+    return type(prado) == list and all(map(lambda y: type(y) == list and y != [], prado))
 
 
 def eh_posicao_animal(prado, posicao):
@@ -534,7 +540,21 @@ def eh_posicao_obstaculo(prado, posicao):
     Devolve True caso a posição dada do prado seja um rochedo.
     Caso contrário, devolve False.
     '''
-    return obter_animal(prado, posicao) == "r"
+    return obter_pos_y(posicao) <= obter_tamanho_y(prado) and obter_pos_x(posicao) <= obter_tamanho_x(prado) and obter_animal(prado, posicao) == "r"
+
+
+dim = cria_posicao(11, 4)
+obs = (cria_posicao(4, 2), cria_posicao(5, 2))
+an1 = tuple(cria_animal('rabbit', 5, 0) for i in range(3))
+an2 = (cria_animal('lynx', 20, 15), )
+pos = tuple(
+    cria_posicao(p[0], p[1])
+    for p in ((5, 1), (7, 2), (10, 1), (6, 1)))
+prado = cria_prado(dim, obs, an1 + an2, pos)
+
+for x, y in ((4, 2), (5, 2), (0, 0), (0, 5), (3, 0), (11, 4), (11, 2), (7, 4)):
+    pos_obs = cria_posicao(x, y)
+    print(eh_posicao_obstaculo(prado, pos_obs))
 
 
 def eh_posicao_livre(prado, posicao):

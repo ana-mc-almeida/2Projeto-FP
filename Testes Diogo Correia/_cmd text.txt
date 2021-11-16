@@ -1,2 +1,3 @@
 g:
 cd G:\My Drive\Escola\LEIC 1\1º Semestre\Fundamentos da Programação\2Projeto-FP\Testes Diogo Correia
+python proj_tester.py ..\projeto2_102618.py 2> results.txt
