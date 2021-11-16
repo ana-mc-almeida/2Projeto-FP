@@ -1,5 +1,10 @@
 AINDA TENHO DE FAZER:
     Doc_string in "valida_cria_animal"
+    Doc_string in "cria_prado" e funções internas
+    Validar argumentos "cria_prado"
+    Adicionar comentários na "cria_prado"
+    Função "eh_prado"
+    Tirar linha "print_prado(prado)"
 
 
 

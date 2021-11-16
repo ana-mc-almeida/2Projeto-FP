@@ -349,138 +349,271 @@ def reproduz_animal(animal):
 # TAD prado
 #
 
+def print_prado(prado):  # não é para o projeto
+    for y in range(len(prado)):
+        for x in range(len(prado[y])):
+            if eh_animal(prado[y][x]):
+                print("a", end=" ")
+            else:
+                print(prado[y][x], end=" ")
+        print()
 
-def cria_prado():
+
+def cria_prado(ultima_posicao, rochedos, animais, posicoes_animais):
     '''
     cria_prado: posicao, tuplo, tuplo, tuplo -> prado
+
     '''
-    pass
+    def criar_estrutura_prado(max_x, max_y):
+        for y in range(max_y+1):
+            prado.append([])
+            for x in range(max_x+1):
+                if y == 0 or y == max_y or x == 0 or x == max_x:
+                    prado[y] += "r"
+                else:
+                    prado[y] += "."
+
+    def colocar_rochedos(rochedos):
+        for rochedo in rochedos:
+            prado[obter_pos_y(rochedo)][obter_pos_x(rochedo)] = "r"
+
+    def colocar_animais(animais, posicoes):
+        for i in range(len(posicoes)):
+            posicao = posicoes[i]
+            prado[obter_pos_y(posicao)][obter_pos_x(posicao)] = animais[i]
+        return prado
+
+    prado = []
+    max_x = obter_pos_x(ultima_posicao)
+    max_y = obter_pos_y(ultima_posicao)
+
+    criar_estrutura_prado(max_x, max_y)
+    colocar_rochedos(rochedos)
+    colocar_animais(animais, posicoes_animais)
+
+    # print_prado(prado)
+    return(prado)
 
 
 def cria_copia_prado(prado):
     '''
     cria_copia_prado: prado -> prado
+
+    Devolve uma cópia do prado recebido.
     '''
-    pass
+    return prado.copy()
 
 
 def obter_tamanho_x(prado):
     '''
     obter_tamanho_x: prado -> int
+
+    Devolve o valor inteiro que corresponde à dimensão Nx do prado recebido.
     '''
-    pass
+    return len(prado[0])
 
 
 def obter_tamanho_y(prado):
     '''
     cria_prado: prado -> int
+
+    Devolve o valor inteiro que corresponde à dimensão Ny do prado recebido.
     '''
-    pass
+    return len(prado)
 
 
 def obter_numero_predadores(prado):
     '''
     obter_numero_predadores: prado -> int
+
+    Devolve o número de predadores do prado.
     '''
-    pass
+    count = 0
+    for y in range(1, len(prado)):
+        for x in range(1, len(prado[y])):
+            if eh_predador(prado[y][x]):
+                count += 1
+    return count
 
 
 def obter_numero_presas(prado):
     '''
     obter_numero_presas: prado -> int
+
+    Devolve o número de presas do prado.
     '''
-    pass
+    count = 0
+    for y in range(1, len(prado)):
+        for x in range(1, len(prado[y])):
+            if eh_presa(prado[y][x]):
+                count += 1
+    return count
 
 
 def obter_posicao_animais(prado):
     '''
     obter_posicao_animais: prado -> tuplo posicoes
+
+    Devolve um tuplo com todas as posições em que se encontra um animal.
+    Estas posições estão ordenadas por ordem de leitura do prado.
     '''
-    pass
+    posicoes = ()
+    for y in range(1, len(prado)):
+        for x in range(1, len(prado[y])):
+            if eh_presa(prado[y][x]):
+                posicoes += cria_posicao(x, y)
+    return posicoes
 
 
-def obter_animal():
+def obter_animal(prado, posicao):
     '''
     obter_animal: prado, posicao -> animal
+
+    Devolve o animal do prado que se encontra na posição dada.
     '''
-    pass
+    return prado[obter_pos_y(posicao)][obter_pos_x(posicao)]
 
 
-def eliminar_animal(prado):
+def eliminar_animal(prado, posicao):
     '''
     eliminar_animal: prado, posicao -> prado
+
+    Devolve o prado, depois de eliminar o animal que se encontrava na posição recebida.
     '''
-    pass
+    prado[obter_pos_y(posicao)][obter_pos_x(posicao)] = "."
+    return prado
 
 
-def mover_animal(prado):
-    '''
-    mover_animal: prado, posicao, posicao -> prado
-    '''
-    pass
-
-
-def inserir_animal(prado):
+def inserir_animal(prado, animal, posicao):
     '''
     inserir_animal: prado, animal, posicao -> prado
+
+    Devolve o prado, depois de adicionado à posição recebida o animal dado.
     '''
-    pass
+    prado[obter_pos_y(posicao)][obter_pos_x(posicao)] = animal
+    return prado
+
+
+def mover_animal(prado, posicao_inicial, posicao_nova):
+    '''
+    mover_animal: prado, posicao, posicao -> prado
+
+    Devolve o prado, depois de movimentado o animal da posição inicial para a nova posição.
+    '''
+    animal = obter_animal(prado, posicao_inicial)
+    prado = inserir_animal(prado, animal, posicao_nova)
+    prado = eliminar_animal(prado, posicao_inicial)
+
+    return prado
 
 
 def eh_prado(prado):
     '''
     eh_prado: universal -> booleano
+
+    Devolve True caso o argumento dado seja um TAD prado.
+    Caso contrário, devolve False.
     '''
     pass
 
 
-def eh_posicao_animal(prado):
+def eh_posicao_animal(prado, posicao):
     '''
     eh_posicao_animal: prado, posicao -> booleano
+
+    Devolve True caso a posição dada do prado esteja ocupada por um animal.
+    Caso contrário, devolve False.
     '''
-    pass
+    return eh_animal(obter_animal(prado, posicao))
 
 
-def eh_posicao_obstaculo(prado):
+def eh_posicao_obstaculo(prado, posicao):
     '''
     eh_posicao_obstaculo: prado, posicao -> booleano
+
+    Devolve True caso a posição dada do prado seja um rochedo.
+    Caso contrário, devolve False.
     '''
-    pass
+    return obter_animal(prado, posicao) == "r"
 
 
-def eh_posicao_livre(prado):
+def eh_posicao_livre(prado, posicao):
     '''
     eh_posicao_livre: prado, posicao -> booleano
+
+    Devolve True caso a posição dada do prado esteja livre.
+    Caso contrário, devolve False.
     '''
-    pass
+    return obter_animal(prado, posicao) == "."
 
 
-def prados_iguais(prado):
+def prados_iguais(prado1, prado2):
     '''
     prados_iguais: prado, prado -> booleano
     '''
-    pass
+    return prado1 == prado2
 
 
 def prado_para_str(prado):
     '''
     prado_para_str: prado -> str
+
+    Devolve uma cadeia de caracteres que representa o prado.
     '''
-    pass
+    result = ""
+    max_x = obter_tamanho_x(prado)
+    max_y = obter_tamanho_y(prado)
+
+    for y in range(max_y):
+        for x in range(max_x):
+            if (x == 0 and y == 0) or (x == max_x-1 and y == max_y-1) or (x == 0 and y == max_y-1) or (x == max_x-1 and y == 0):
+                result += "+"
+            elif x == 0 or x == max_x-1:
+                result += "|"
+            elif y == 0 or y == max_y-1:
+                result += "-"
+            elif eh_posicao_livre(prado, cria_posicao(x, y)):
+                result += "."
+            elif eh_posicao_obstaculo(prado, cria_posicao(x, y)):
+                result += "@"
+            else:
+                result += animal_para_char(obter_animal(prado,
+                                           cria_posicao(x, y)))
+        result += "\n"
+    return result
 
 
-def obter_valor_numerico(prado):
+def obter_valor_numerico(prado, posicao):
     '''
     obter_valor_numerico: prado, posicao -> int
+
+    Devolve o valor numérico da posição recebida.
     '''
-    pass
+    return obter_pos_y(posicao) * obter_tamanho_x(prado) + obter_pos_x(posicao)
 
 
-def obter_movimento(prado):
+def obter_movimento(prado, posicao):
     '''
     obter_movimento: prado, posicao -> posicao
+
+    Devolve a posição seguinte do animal que se encontra na posição recebida.
     '''
-    pass
+    posicao_nova = posicao
+    valor_numerico = obter_valor_numerico(prado, posicao)
+    posicoes_adjacentes = obter_posicoes_adjacentes(posicao)
+    movimentos = []
+
+    if eh_predador(obter_animal(prado, posicao)):
+        for posicao_adjacente in posicoes_adjacentes:
+            if eh_presa(obter_animal(prado, posicao_adjacente)):
+                movimentos.append(posicao_adjacente)
+    if movimentos == []:  # significa que a posição dada tem uma presa ou não tem presas à volta
+        for posicao_adjacente in posicoes_adjacentes:
+            if eh_posicao_livre(prado, posicao_adjacente):
+                movimentos.append(posicao_adjacente)
+    posicao_nova = movimentos[valor_numerico % len(movimentos)]
+    return posicao_nova
+
 
 #
 #
