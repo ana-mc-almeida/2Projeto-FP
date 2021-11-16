@@ -579,7 +579,8 @@ def prado_para_str(prado):
             else:
                 result += animal_para_char(obter_animal(prado,
                                            cria_posicao(x, y)))
-        result += "\n"
+        if y != max_y-1:
+            result += "\n"
     return result
 
 
@@ -611,7 +612,8 @@ def obter_movimento(prado, posicao):
         for posicao_adjacente in posicoes_adjacentes:
             if eh_posicao_livre(prado, posicao_adjacente):
                 movimentos.append(posicao_adjacente)
-    posicao_nova = movimentos[valor_numerico % len(movimentos)]
+    if movimentos != []:
+        posicao_nova = movimentos[valor_numerico % len(movimentos)]
     return posicao_nova
 
 
@@ -659,8 +661,67 @@ def geracao(prado):
     return prado
 
 
-def simula_ecossistema():
+def get_ultima_posicao(line):
+    ultima_posicao_re = eval(line)  # re = representação externa
+    return cria_posicao(ultima_posicao_re[0], ultima_posicao_re[1])
+
+
+def get_rochedos(line):
+    rochedos = ()
+    rochedos_re = eval(line)
+    for rochedo_re in rochedos_re:
+        rochedos += (cria_posicao(rochedo_re[0], rochedo_re[1]),)
+    return rochedos
+
+
+def get_animais_e_posicoes(linhas):
+    animais = ()
+    posicoes_animais = ()
+    for linha in linhas:
+        tudo = eval(linha)
+        posicoes_animais += (cria_posicao(tudo[-1][0], tudo[-1][1]),)
+        animais += (cria_animal(tudo[0], tudo[1], tudo[2]),)
+    return animais, posicoes_animais
+
+
+def mostra_geracao(prado, g):
+    print("Predadores: " + str(obter_numero_predadores(prado)), end=" ")
+    print("vs", end=" ")
+    print("Presas: " + str(obter_numero_presas(prado)), end=" ")
+    print("(Gen. " + str(g) + ")")
+    print(prado_para_str(prado))
+
+
+def simula_ecossistema(ficheiro, geracoes, verboso):
     '''
     simula_ecossistema: str, int, booleano -> tuplo
     '''
-    pass
+    file = open(ficheiro, "r")
+
+    linhas = file.readlines()
+    ultima_posicao = get_ultima_posicao(linhas[0])
+    rochedos = get_rochedos(linhas[1])
+    animais, posicoes_animais = get_animais_e_posicoes(linhas[2:])
+
+    espacos_livres = (obter_pos_x(ultima_posicao) - 2) * \
+        (obter_pos_y(ultima_posicao) - 2) - len(rochedos)
+
+    file.close()
+
+    prado = cria_prado(ultima_posicao, rochedos, animais, posicoes_animais)
+
+    mostra_geracao(prado, 0)
+    predadores = obter_numero_predadores(prado)
+    presas = obter_numero_presas(prado)
+    for g in range(1, geracoes+1):
+        if espacos_livres == predadores or espacos_livres == presas:
+            break
+        prado = geracao(prado)
+        if (predadores != obter_numero_predadores(prado) or presas != obter_numero_presas(prado)) and verboso:
+            mostra_geracao(prado, g)
+        predadores = obter_numero_predadores(prado)
+        presas = obter_numero_presas(prado)
+
+    if not verboso:
+        mostra_geracao(prado, g)
+    print(f"({obter_numero_predadores(prado)}, {obter_numero_presas(prado)})")

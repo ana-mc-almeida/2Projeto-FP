@@ -6,6 +6,7 @@ AINDA TENHO DE FAZER:
     Função "eh_prado"
     Tirar linha "print_prado(prado)"
     "reproduz_animal" está mal feito
+    Doc_strings de váaaarias
 
 
 
