@@ -342,7 +342,7 @@ def reproduz_animal(animal):
     novo_animal = reset_fome(novo_animal)
     novo_animal = reset_idade(novo_animal)
     animal = reset_idade(animal)
-    return novo_animal
+    return novo_animal, animal
 
 
 #
@@ -460,8 +460,8 @@ def obter_posicao_animais(prado):
     posicoes = ()
     for y in range(1, len(prado)):
         for x in range(1, len(prado[y])):
-            if eh_presa(prado[y][x]):
-                posicoes += cria_posicao(x, y)
+            if eh_presa(prado[y][x]) or eh_predador(prado[y][x]):
+                posicoes += (cria_posicao(x, y),)
     return posicoes
 
 
@@ -620,11 +620,43 @@ def obter_movimento(prado, posicao):
 #
 
 
-def geracao():
+def geracao(prado):
     '''
     geracao: prado -> prado
     '''
-    pass
+    posicoes_movimentadas = []
+    posicoes_animais = obter_posicao_animais(prado)
+    for posicao in posicoes_animais:
+        if posicao not in posicoes_movimentadas:
+            animal = obter_animal(prado, posicao)
+            animal = aumenta_idade(animal)
+            animal = aumenta_fome(animal)
+            posicao_nova = obter_movimento(prado, posicao)
+            if not posicoes_iguais(posicao, posicao_nova):  # muda de posição
+                # reproduz e come
+                if eh_animal_fertil(animal) and eh_presa(obter_animal(prado, posicao_nova)):
+                    prado = eliminar_animal(prado, posicao_nova)
+                    animal = reset_fome(animal)
+                    animal_novo, animal = reproduz_animal(animal)
+                    prado = mover_animal(prado, posicao, posicao_nova)
+                    prado = inserir_animal(animal_novo, posicao)
+                elif eh_presa(obter_animal(prado, posicao_nova)):  # só come
+                    animal = reset_fome(animal)
+                    prado = eliminar_animal(prado, posicao_nova)
+                    prado = mover_animal(prado, posicao, posicao_nova)
+                elif eh_animal_faminto(animal):  # morre à fome
+                    prado = eliminar_animal(prado, posicao)
+                elif eh_animal_fertil(animal):    # só reproduz
+                    animal_novo, animal = reproduz_animal(animal)
+                    prado = mover_animal(prado, posicao, posicao_nova)
+                    prado = inserir_animal(prado, animal_novo, posicao)
+
+                else:
+                    prado = mover_animal(prado, posicao, posicao_nova)
+                posicoes_movimentadas.append(posicao_nova)
+            elif eh_animal_faminto(animal):
+                prado = eliminar_animal(prado, posicao)
+    return prado
 
 
 def simula_ecossistema():

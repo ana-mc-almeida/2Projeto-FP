@@ -5,6 +5,7 @@ AINDA TENHO DE FAZER:
     Adicionar comentários na "cria_prado"
     Função "eh_prado"
     Tirar linha "print_prado(prado)"
+    "reproduz_animal" está mal feito
 
 
 
