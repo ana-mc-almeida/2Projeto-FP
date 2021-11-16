@@ -13,7 +13,7 @@ def is_str_n_nula(string):
     return type(string) == str and len(string) > 0
 
 
-def is_int_positivo(num):
+def is_int_positivo_ou_0(num):
     return type(num) == int and num >= 0
 
 #
@@ -27,7 +27,7 @@ def cria_posicao(x, y):
 
     Devolve a posição correspondente às coordenadas recebidas.
     '''
-    if not (is_int_positivo(x) and is_int_positivo(y)):
+    if not (is_int_positivo_ou_0(x) and is_int_positivo_ou_0(y)):
         argumentos_invalidos("cria_posicao")
     return (x, y)
 
@@ -38,7 +38,10 @@ def cria_copia_posicao(posicao):
 
     Devolve uma cópia da posição recebida
     '''
-    return posicao.copy()
+    return tuple(list(posicao))
+
+
+# print(cria_copia_posicao(cria_posicao(5, 4)))
 
 
 def obter_pos_x(posicao):
@@ -66,7 +69,10 @@ def eh_posicao(arg):
     Devolve True caso o argumento dado seja um TAD posicao.
     Caso contrário, devolve False.
     '''
-    return type(arg) == tuple and len(arg) == 2 and is_int_positivo(arg[0]) and is_int_positivo(arg[1])
+    return type(arg) == tuple and len(arg) == 2 and is_int_positivo_ou_0(arg[0]) and is_int_positivo_ou_0(arg[1])
+
+
+# print(eh_posicao((int("89"), 0)))
 
 
 def posicoes_iguais(posicao1, posicao2):
@@ -97,11 +103,16 @@ def obter_posicoes_adjacentes(posicao):
     x = obter_pos_x(posicao)
     y = obter_pos_y(posicao)
 
+    if x < 1 and y < 1:
+        return (cria_posicao(x+1, y), cria_posicao(x, y+1))
     if x < 1 and y > 0:
         return (cria_posicao(x, y-1), cria_posicao(x+1, y), cria_posicao(x, y+1))
     if x > 0 and y < 1:
         return (cria_posicao(x+1, y), cria_posicao(x, y+1), cria_posicao(x-1, y))
     return (cria_posicao(x, y-1), cria_posicao(x+1, y), cria_posicao(x, y+1), cria_posicao(x-1, y))
+
+
+# print(obter_posicoes_adjacentes(cria_posicao(0, 0)))
 
 
 def ordenar_posicoes(posicoes):
@@ -111,6 +122,9 @@ def ordenar_posicoes(posicoes):
     Devolve um tuplo com posições ordenadas por ordem de leitura do prado.
     '''
     return sorted(posicoes, key=lambda posicao: (obter_pos_y(posicao), obter_pos_x(posicao)))
+
+
+# print(ordenar_posicoes(()))
 
 #
 #   TAD animal
@@ -123,7 +137,7 @@ def valida_cria_animal(especie, freq_reproducao, freq_alimentacao):
 
 
     '''
-    return is_str_n_nula(especie) and is_int_positivo(freq_reproducao) and (type(freq_alimentacao) == int and freq_alimentacao >= 0)
+    return is_str_n_nula(especie) and type(freq_reproducao) == int and freq_reproducao > 0 and is_int_positivo_ou_0(freq_alimentacao)
 
 
 def cria_animal(especie, freq_reproducao, freq_alimentacao):
@@ -219,7 +233,7 @@ def eh_animal(arg):
     Caso contrário, devolve False.
     '''
     if type(arg) == dict and len(arg) == 5 and {"especie", "idade", "fome", "freq_alimentacao", "freq_reproducao"} <= arg.keys():
-        return valida_cria_animal(obter_especie(arg), obter_freq_reproducao(arg), obter_freq_alimentacao(arg)) and is_int_positivo(obter_fome(arg)) and is_int_positivo(obter_idade(arg))
+        return valida_cria_animal(obter_especie(arg), obter_freq_reproducao(arg), obter_freq_alimentacao(arg)) and is_int_positivo_ou_0(obter_fome(arg)) and is_int_positivo_ou_0(obter_idade(arg))
     return False
 
 
@@ -369,7 +383,7 @@ def cria_prado(ultima_posicao, rochedos, animais, posicoes_animais):
 
     '''
     def valida_cria_prado():
-        if not(eh_posicao(ultima_posicao) and type(rochedos) == type(animais) == type(posicoes_animais) and len(animais) == len(posicoes_animais)):
+        if not(eh_posicao(ultima_posicao) and type(rochedos) == type(animais) == type(posicoes_animais) == tuple and len(animais) == len(posicoes_animais)):
             argumentos_invalidos("cria_prado")
 
     def criar_estrutura_prado(max_x, max_y):
@@ -524,7 +538,8 @@ def eh_prado(prado):
     Devolve True caso o argumento dado seja um TAD prado.
     Caso contrário, devolve False.
     '''
-    return type(prado) == list and all(map(lambda y: type(y) == list and y != [], prado))
+    # return type(prado) == list and all(map(lambda y: type(y) == list and y != [], prado))
+    return type(prado) == list and all(map(lambda y: type(y) == list and y != [] and all(map(lambda x: eh_posicao_animal(prado[y][x]) or eh_posicao_obstaculo(prado[y][x]) or eh_posicao_livre(prado[y][x]), y), prado)))
 
 
 def eh_posicao_animal(prado, posicao):
@@ -650,7 +665,7 @@ def geracao(prado):
                 if eh_animal_fertil(animal) and eh_presa(obter_animal(prado, posicao_nova)):
                     prado = eliminar_animal(prado, posicao_nova)
                     animal = reset_fome(animal)
-                    animal_novo, animal = reproduz_animal(animal)
+                    animal_novo = reproduz_animal(animal)
                     prado = mover_animal(prado, posicao, posicao_nova)
                     prado = inserir_animal(animal_novo, posicao)
                 elif eh_presa(obter_animal(prado, posicao_nova)):  # só come
@@ -660,7 +675,7 @@ def geracao(prado):
                 elif eh_animal_faminto(animal):  # morre à fome
                     prado = eliminar_animal(prado, posicao)
                 elif eh_animal_fertil(animal):    # só reproduz
-                    animal_novo, animal = reproduz_animal(animal)
+                    animal_novo = reproduz_animal(animal)
                     prado = mover_animal(prado, posicao, posicao_nova)
                     prado = inserir_animal(prado, animal_novo, posicao)
                 else:
@@ -734,4 +749,11 @@ def simula_ecossistema(ficheiro, geracoes, verboso):
 
     if not verboso:
         mostra_geracao(prado, g)
-    print(f"({obter_numero_predadores(prado)}, {obter_numero_presas(prado)})")
+
+    return (obter_numero_predadores(prado), obter_numero_presas(prado))
+
+
+# print(simula_ecossistema('public_test_config.txt', 20, False))
+# print("COMO DEVIA FICAR: \n Predadores: 1 vs Presas: 3 (Gen. 0)\n+----------+\n|..........|\n|.mL@@....m|\n|...m......|\n+----------+\nPredadores: 0 vs Presas: 28 (Gen. 20)\n+----------+\n|mmmmmmmmmm|\n|mmm@@mmmmm|\n|mmmmmmmmmm|\n+----------+\n(0, 28)")
+# simula_ecossistema('public_test_config.txt', 20, True)
+# print("COMO DEVIA FICAR: \n Predadores: 1 vs Presas: 3 (Gen. 0)\n+----------+\n|..........|\n|.mL@@....m|\n|...m......|\n+----------+\nPredadores: 1 vs Presas: 6 (Gen. 2)\n+----------+\n|...L......|\n|mm.@@....m|\n|...mm....m|\n+----------+\nPredadores: 0 vs Presas: 6 (Gen. 3)\n+----------+\n|.........m|\n|...@@....m|\n|mmmm......|\n+----------+\nPredadores: 0 vs Presas: 12 (Gen. 4)\n+----------+\n|........mm|\n|mmm@@....m|\n|mmmmm....m|\n+----------+\nPredadores: 0 vs Presas: 18 (Gen. 6)\n+----------+\n|mmm....mmm|\n|mmm@@..mmm|\n|mmmmm....m|\n+----------+\nPredadores: 0 vs Presas: 20 (Gen. 7)\n+----------+\n|mmmm..mmmm|\n|mmm@@..mmm|\n|mmmm.m.m..|\n+----------+\nPredadores: 0 vs Presas: 28 (Gen. 8)\n+----------+\n|mmmmmmmmmm|\n|mmm@@mmmmm|\n|mmmmmmmmmm|\n+----------+\n(0, 28)")

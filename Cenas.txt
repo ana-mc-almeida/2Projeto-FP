@@ -12,3 +12,36 @@ DÚVIDAS:
     Posso usar a função "argumentos_invalidos"?
     Posso usar a função "valida_cria_animal" dentro da função "eh_animal"?
     "obter_animal" só pode dar return num animal? e se for um rochedo?
+
+    50 ordenar_posicoes
+
+
+
+ERROS EXECUÇÃO:
+        25  geracao
+        26  geracao
+        27  simula
+        28  simula
+        34 cria_copia_posicao
+        42 eh_posicao
+        49 obter_posicoes_adjacentes
+    50 ordenar_posicoes
+        57 valida_cria_animal
+        116 cria_prado
+        118 cria_prado
+        119 cria_prado
+        120 cria_prado
+        152 eh_prado
+        199 geracao
+        200 simula
+        201 simula
+        202 simula
+        203 simula
+        204 simula
+        205 simula
+        206 simula
+        207 simula
+        208 simula
+    224 barreiras FAN prado
+    225 barreiras geração
+        226 barreiras simula
