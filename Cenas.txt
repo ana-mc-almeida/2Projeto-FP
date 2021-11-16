@@ -3,7 +3,7 @@ AINDA TENHO DE FAZER:
     Doc_string in "cria_prado" e funções internas
     Adicionar comentários na "cria_prado"
     Tirar linha "print_prado(prado)"
-    "reproduz_animal" está mal feito
+    # "reproduz_animal" está mal feito
     Doc_strings de váaaarias
 
 

@@ -338,16 +338,20 @@ def reproduz_animal(animal):
     Devolve um novo animal da mesma espécie do animal recebido, idade e fome igual a 0.
     Modifica destrutivamente animal recebido, alterando a sua idade para 0.
     '''
-    novo_animal = cria_copia_animal(animal)
-    novo_animal = reset_fome(novo_animal)
-    novo_animal = reset_idade(novo_animal)
+    novo_animal = reset_idade((reset_fome(cria_copia_animal(animal))))
     animal = reset_idade(animal)
-    return novo_animal, animal
+    # return novo_animal, animal
+    return novo_animal
 
+
+# animal = aumenta_idade(cria_animal("anan", 45, 5))
+# print(reproduz_animal(animal))
+# print(animal)
 
 #
 # TAD prado
 #
+
 
 def print_prado(prado):  # não é para o projeto
     for y in range(len(prado)):
@@ -540,21 +544,8 @@ def eh_posicao_obstaculo(prado, posicao):
     Devolve True caso a posição dada do prado seja um rochedo.
     Caso contrário, devolve False.
     '''
-    return obter_pos_y(posicao) <= obter_tamanho_y(prado) and obter_pos_x(posicao) <= obter_tamanho_x(prado) and obter_animal(prado, posicao) == "r"
-
-
-dim = cria_posicao(11, 4)
-obs = (cria_posicao(4, 2), cria_posicao(5, 2))
-an1 = tuple(cria_animal('rabbit', 5, 0) for i in range(3))
-an2 = (cria_animal('lynx', 20, 15), )
-pos = tuple(
-    cria_posicao(p[0], p[1])
-    for p in ((5, 1), (7, 2), (10, 1), (6, 1)))
-prado = cria_prado(dim, obs, an1 + an2, pos)
-
-for x, y in ((4, 2), (5, 2), (0, 0), (0, 5), (3, 0), (11, 4), (11, 2), (7, 4)):
-    pos_obs = cria_posicao(x, y)
-    print(eh_posicao_obstaculo(prado, pos_obs))
+    # return obter_pos_y(posicao) <= obter_tamanho_y(prado) and obter_pos_x(posicao) <= obter_tamanho_x(prado) and obter_animal(prado, posicao) == "r"
+    return obter_animal(prado, posicao) == "r"
 
 
 def eh_posicao_livre(prado, posicao):
@@ -672,7 +663,6 @@ def geracao(prado):
                     animal_novo, animal = reproduz_animal(animal)
                     prado = mover_animal(prado, posicao, posicao_nova)
                     prado = inserir_animal(prado, animal_novo, posicao)
-
                 else:
                     prado = mover_animal(prado, posicao, posicao_nova)
                 posicoes_movimentadas.append(posicao_nova)

@@ -5,8 +5,8 @@ ERROR: test_cria_prado (__main__.TestTADPrado) [Test eh_posicao_obstaculo (expec
 Traceback (most recent call last):
   File "G:\My Drive\Escola\LEIC 1\1º Semestre\Fundamentos da Programação\2Projeto-FP\Testes Diogo Correia\proj_tester.py", line 217, in test_cria_prado
     self.assertTrue(target.eh_posicao_obstaculo(prado, pos_obs))
-  File "<string>", line 543, in eh_posicao_obstaculo
-  File "<string>", line 480, in obter_animal
+  File "<string>", line 548, in eh_posicao_obstaculo
+  File "<string>", line 484, in obter_animal
 IndexError: list index out of range
 
 ======================================================================
@@ -16,8 +16,8 @@ Testa as barreiras de abstração do TAD Prado nas funções do TAD
 Traceback (most recent call last):
   File "G:\My Drive\Escola\LEIC 1\1º Semestre\Fundamentos da Programação\2Projeto-FP\Testes Diogo Correia\proj_tester.py", line 217, in test_cria_prado
     self.assertTrue(target.eh_posicao_obstaculo(prado, pos_obs))
-  File "<string>", line 543, in eh_posicao_obstaculo
-  File "<string>", line 480, in obter_animal
+  File "<string>", line 548, in eh_posicao_obstaculo
+  File "<string>", line 484, in obter_animal
 IndexError: list index out of range
 
 ======================================================================
@@ -27,8 +27,8 @@ Testa as barreiras de abstração do TAD Prado nas funções do TAD
 Traceback (most recent call last):
   File "G:\My Drive\Escola\LEIC 1\1º Semestre\Fundamentos da Programação\2Projeto-FP\Testes Diogo Correia\proj_tester.py", line 217, in test_cria_prado
     self.assertTrue(target.eh_posicao_obstaculo(prado, pos_obs))
-  File "<string>", line 543, in eh_posicao_obstaculo
-  File "<string>", line 480, in obter_animal
+  File "<string>", line 548, in eh_posicao_obstaculo
+  File "<string>", line 484, in obter_animal
 IndexError: list index out of range
 
 ======================================================================
@@ -38,11 +38,11 @@ Testa as barreiras de abstração do TAD Prado nas funções do TAD
 Traceback (most recent call last):
   File "G:\My Drive\Escola\LEIC 1\1º Semestre\Fundamentos da Programação\2Projeto-FP\Testes Diogo Correia\proj_tester.py", line 217, in test_cria_prado
     self.assertTrue(target.eh_posicao_obstaculo(prado, pos_obs))
-  File "<string>", line 543, in eh_posicao_obstaculo
-  File "<string>", line 480, in obter_animal
+  File "<string>", line 548, in eh_posicao_obstaculo
+  File "<string>", line 484, in obter_animal
 IndexError: list index out of range
 
 ----------------------------------------------------------------------
-Ran 23 tests in 0.054s
+Ran 23 tests in 0.030s
 
 FAILED (errors=4)
