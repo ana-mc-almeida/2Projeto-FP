@@ -121,10 +121,16 @@ def ordenar_posicoes(posicoes):
 
     Devolve um tuplo com posições ordenadas por ordem de leitura do prado.
     '''
-    return sorted(posicoes, key=lambda posicao: (obter_pos_y(posicao), obter_pos_x(posicao)))
+    # return sorted(posicoes, key=lambda posicao: (obter_pos_y(posicao), obter_pos_x(posicao)))
+    posicoes2 = list(map(lambda posicao: tuple((obter_pos_x(
+        posicao), obter_pos_y(posicao))), posicoes))
+    return sorted(posicoes2, key=lambda posicoes2: (posicoes2[1], posicoes2[0]))
 
 
 # print(ordenar_posicoes(()))
+# p2 = cria_posicao(1, 1)
+# t = obter_posicoes_adjacentes(p2)
+# print(tuple(posicao_para_str(p) for p in ordenar_posicoes(t)))
 
 #
 #   TAD animal
@@ -542,10 +548,26 @@ def eh_prado(prado):
     eh_prado: universal -> booleano
 
     Devolve True caso o argumento dado seja um TAD prado.
-    Caso contrário, devolve False.
+    Caso contrário, devolve False.8
     '''
-    return type(prado) == list and all(map(lambda y: type(y) == list and y != [], prado))
+    # if type(prado) == list and all(map(lambda y: type(y) == list and y != [], prado)):
+    #     for y in range(len(prado)):
+    #         for x in range(len(prado[y])):
+    #             if prado[y][x] != "r" and prado[y][x] != "." and cria_posicao(x, y) not in obter_posicao_animais(prado):
+    #                 return False
+    #     return True
+    # return False
     # return type(prado) == list and all(map(lambda y: type(y) == list and y != [] and all(map(lambda x: eh_posicao_animal(prado[y][x]) or eh_posicao_obstaculo(prado[y][x]) or eh_posicao_livre(prado[y][x]), y), prado)))
+    return type(prado) == list and all(map(lambda y: type(y) == list and y != [] and all(map(lambda x: eh_posicao_animal(prado[y][x]) or eh_posicao_obstaculo(prado[y][x]) or eh_posicao_livre(prado[y][x]), y), prado))) and len(obter_posicao_animais(prado)) > 0
+
+
+# prado = cria_prado((5,5), ((3,4),(7,7),(2,5)), (cria_animal("aaa", 5,5),cria_animal("bbb",8,9)), ((5,4), (1,1)))
+# prado = cria_prado((5, 5), ((3, 4), (4, 4), (2, 4)), (cria_animal(
+#     "aaa", 5, 5), cria_animal("bbb", 8, 9)), ((4, 4), (1, 1)))
+# prado = [['r', 'r', 'r', 'r', 'r', 'r'], ['r', cria_animal("a", 9, 8), '.', '.', '.', 'r'], ['r', '.', '.', '.', '.', 'r'], [
+#     'r', '.', '.', '.', '.', 'r'], ['r', '.', 'r', 'r', cria_animal("a", 9, 8), 'r'], ['r', 'r', 'r', cria_animal("a", 9, 8), 'r', 'r']]
+# print_prado(prado)
+# print(eh_prado(prado))
 
 
 def eh_posicao_animal(prado, posicao):
@@ -631,7 +653,7 @@ def obter_movimento(prado, posicao):
 
     Devolve a posição seguinte do animal que se encontra na posição recebida.
     '''
-    posicao_nova = posicao
+    posicao_nova = cria_copia_posicao(posicao)
     valor_numerico = obter_valor_numerico(prado, posicao)
     posicoes_adjacentes = obter_posicoes_adjacentes(posicao)
     movimentos = []
@@ -645,13 +667,16 @@ def obter_movimento(prado, posicao):
             if eh_posicao_livre(prado, posicao_adjacente):
                 movimentos.append(posicao_adjacente)
     if movimentos != []:
-        posicao_nova = movimentos[valor_numerico % len(movimentos)]
+        i = valor_numerico % len(movimentos)
+        posicao_nova = cria_copia_posicao(movimentos[i])
     return posicao_nova
 
 
 #
 #
 #
+
+
 def come(prado, animal, posicao_da_presa):
     animal = reset_fome(animal)
     prado = eliminar_animal(prado, posicao_da_presa)

@@ -16,18 +16,18 @@ DÚVIDAS:
 
 
 ERROS EXECUÇÃO 16_11 (2):
-I - 50 ordenar_posicoes
+    I - 50 ordenar_posicoes
     I - 116 cria_prado
     I - 118 cria_prado
     I - 119 cria_prado
     I - 120 cria_prado
-I - 152 eh_prado -> ver se não há animais / obstáculos nas montanhas nem fora delas
+    I - 152 eh_prado -> ver se não há animais / obstáculos nas montanhas nem fora delas -> verifiquei que tinha pelo menos 1 animal
         156 eh_prado
         158 eh_prado
         159 eh_prado
     I - 202 simula_ecossistema -> ver 1 a 1
     I - 203 simula_ecossistema -
-I - 224 FAN prado
+    I - 224 FAN prado
 I - 225 barreiras geracao
 
 

@@ -1,12 +1,27 @@
-.....................
+.............E.......
+======================================================================
+ERROR: test_posicao_mock (__main__.TestTADPosicao)
+Testa as barreiras de abstração do TAD Posição
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "G:\My Drive\Escola\LEIC 1\1º Semestre\Fundamentos da Programação\2Projeto-FP\Testes Diogo Correia\proj_tester.py", line 67, in test_posicao_mock
+    self.test_cria_posicao_enunciado_alto_nivel()
+  File "G:\My Drive\Escola\LEIC 1\1º Semestre\Fundamentos da Programação\2Projeto-FP\Testes Diogo Correia\proj_tester.py", line 56, in test_cria_posicao_enunciado_alto_nivel
+    tuple(
+  File "G:\My Drive\Escola\LEIC 1\1º Semestre\Fundamentos da Programação\2Projeto-FP\Testes Diogo Correia\proj_tester.py", line 57, in <genexpr>
+    target.posicao_para_str(x)
+  File "G:\My Drive\Escola\LEIC 1\1º Semestre\Fundamentos da Programação\2Projeto-FP\Testes Diogo Correia\proj_tester.py", line 455, in <lambda>
+    lambda p: "(" + ", ".join([str(p._foo), str(p._bar)]) + ")")
+AttributeError: 'tuple' object has no attribute '_foo'
+
 ======================================================================
 ERROR: test_cria_prado (__main__.TestTADPrado) [Test eh_posicao_obstaculo (expecting true)] (x=0, y=5)
 ----------------------------------------------------------------------
 Traceback (most recent call last):
   File "G:\My Drive\Escola\LEIC 1\1º Semestre\Fundamentos da Programação\2Projeto-FP\Testes Diogo Correia\proj_tester.py", line 217, in test_cria_prado
     self.assertTrue(target.eh_posicao_obstaculo(prado, pos_obs))
-  File "<string>", line 569, in eh_posicao_obstaculo
-  File "<string>", line 504, in obter_animal
+  File "<string>", line 591, in eh_posicao_obstaculo
+  File "<string>", line 510, in obter_animal
 IndexError: list index out of range
 
 ======================================================================
@@ -16,8 +31,8 @@ Testa as barreiras de abstração do TAD Prado nas funções do TAD
 Traceback (most recent call last):
   File "G:\My Drive\Escola\LEIC 1\1º Semestre\Fundamentos da Programação\2Projeto-FP\Testes Diogo Correia\proj_tester.py", line 217, in test_cria_prado
     self.assertTrue(target.eh_posicao_obstaculo(prado, pos_obs))
-  File "<string>", line 569, in eh_posicao_obstaculo
-  File "<string>", line 504, in obter_animal
+  File "<string>", line 591, in eh_posicao_obstaculo
+  File "<string>", line 510, in obter_animal
 IndexError: list index out of range
 
 ======================================================================
@@ -27,8 +42,8 @@ Testa as barreiras de abstração do TAD Prado nas funções do TAD
 Traceback (most recent call last):
   File "G:\My Drive\Escola\LEIC 1\1º Semestre\Fundamentos da Programação\2Projeto-FP\Testes Diogo Correia\proj_tester.py", line 217, in test_cria_prado
     self.assertTrue(target.eh_posicao_obstaculo(prado, pos_obs))
-  File "<string>", line 569, in eh_posicao_obstaculo
-  File "<string>", line 504, in obter_animal
+  File "<string>", line 591, in eh_posicao_obstaculo
+  File "<string>", line 510, in obter_animal
 IndexError: list index out of range
 
 ======================================================================
@@ -38,11 +53,59 @@ Testa as barreiras de abstração do TAD Prado nas funções do TAD
 Traceback (most recent call last):
   File "G:\My Drive\Escola\LEIC 1\1º Semestre\Fundamentos da Programação\2Projeto-FP\Testes Diogo Correia\proj_tester.py", line 217, in test_cria_prado
     self.assertTrue(target.eh_posicao_obstaculo(prado, pos_obs))
-  File "<string>", line 569, in eh_posicao_obstaculo
-  File "<string>", line 504, in obter_animal
+  File "<string>", line 591, in eh_posicao_obstaculo
+  File "<string>", line 510, in obter_animal
 IndexError: list index out of range
 
+======================================================================
+ERROR: test_prado_mock_low_level (__main__.TestTADPrado) [Test obter_posicao_animais]
+Testa as barreiras de abstração do TAD Prado nas funções do TAD
 ----------------------------------------------------------------------
-Ran 23 tests in 0.031s
+Traceback (most recent call last):
+  File "G:\My Drive\Escola\LEIC 1\1º Semestre\Fundamentos da Programação\2Projeto-FP\Testes Diogo Correia\proj_tester.py", line 200, in test_cria_prado
+    tuple(target.posicao_para_str(x) for x in t))
+  File "G:\My Drive\Escola\LEIC 1\1º Semestre\Fundamentos da Programação\2Projeto-FP\Testes Diogo Correia\proj_tester.py", line 200, in <genexpr>
+    tuple(target.posicao_para_str(x) for x in t))
+  File "G:\My Drive\Escola\LEIC 1\1º Semestre\Fundamentos da Programação\2Projeto-FP\Testes Diogo Correia\proj_tester.py", line 455, in <lambda>
+    lambda p: "(" + ", ".join([str(p._foo), str(p._bar)]) + ")")
+AttributeError: 'tuple' object has no attribute '_foo'
 
-FAILED (errors=4)
+======================================================================
+ERROR: test_prado_mock_low_level (__main__.TestTADPrado) [Test obter_posicao_animais]
+Testa as barreiras de abstração do TAD Prado nas funções do TAD
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "G:\My Drive\Escola\LEIC 1\1º Semestre\Fundamentos da Programação\2Projeto-FP\Testes Diogo Correia\proj_tester.py", line 200, in test_cria_prado
+    tuple(target.posicao_para_str(x) for x in t))
+  File "G:\My Drive\Escola\LEIC 1\1º Semestre\Fundamentos da Programação\2Projeto-FP\Testes Diogo Correia\proj_tester.py", line 200, in <genexpr>
+    tuple(target.posicao_para_str(x) for x in t))
+  File "G:\My Drive\Escola\LEIC 1\1º Semestre\Fundamentos da Programação\2Projeto-FP\Testes Diogo Correia\proj_tester.py", line 455, in <lambda>
+    lambda p: "(" + ", ".join([str(p._foo), str(p._bar)]) + ")")
+AttributeError: 'tuple' object has no attribute '_foo'
+
+======================================================================
+FAIL: test_prado_mock_low_level (__main__.TestTADPrado) [Active mocks: posicao, prado]
+Testa as barreiras de abstração do TAD Prado nas funções do TAD
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "G:\My Drive\Escola\LEIC 1\1º Semestre\Fundamentos da Programação\2Projeto-FP\Testes Diogo Correia\proj_tester.py", line 366, in test_prado_mock_low_level
+    self.test_cria_copia_prado()
+  File "G:\My Drive\Escola\LEIC 1\1º Semestre\Fundamentos da Programação\2Projeto-FP\Testes Diogo Correia\proj_tester.py", line 266, in test_cria_copia_prado
+    self.assertTrue(target.prados_iguais(prado, prado_copia))
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_prado_mock_low_level (__main__.TestTADPrado) [Active mocks: posicao, animal, prado]
+Testa as barreiras de abstração do TAD Prado nas funções do TAD
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "G:\My Drive\Escola\LEIC 1\1º Semestre\Fundamentos da Programação\2Projeto-FP\Testes Diogo Correia\proj_tester.py", line 366, in test_prado_mock_low_level
+    self.test_cria_copia_prado()
+  File "G:\My Drive\Escola\LEIC 1\1º Semestre\Fundamentos da Programação\2Projeto-FP\Testes Diogo Correia\proj_tester.py", line 266, in test_cria_copia_prado
+    self.assertTrue(target.prados_iguais(prado, prado_copia))
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 23 tests in 0.109s
+
+FAILED (failures=2, errors=7)
