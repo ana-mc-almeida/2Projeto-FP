@@ -121,10 +121,23 @@ def ordenar_posicoes(posicoes):
 
     Devolve um tuplo com posições ordenadas por ordem de leitura do prado.
     '''
+    posicoes = list(posicoes)
+    for i in range(len(posicoes)):
+        primeiro = cria_copia_posicao(posicoes[i])
+        primeiro_indice = i
+        for j in range(i+1, len(posicoes)):
+            atual = cria_copia_posicao(posicoes[j])
+            atual_indice = j
+            if obter_pos_y(atual) < obter_pos_y(primeiro) or (obter_pos_y(atual) == obter_pos_y(primeiro) and obter_pos_x(atual) < obter_pos_x(primeiro)):
+                primeiro = cria_copia_posicao(posicoes[j])
+                primeiro_indice = j
+        posicoes[i], posicoes[primeiro_indice] = cria_copia_posicao(
+            posicoes[primeiro_indice]), cria_copia_posicao(posicoes[i])
+    return tuple(posicoes)
     # return sorted(posicoes, key=lambda posicao: (obter_pos_y(posicao), obter_pos_x(posicao)))
-    posicoes2 = list(map(lambda posicao: tuple((obter_pos_x(
-        posicao), obter_pos_y(posicao))), posicoes))
-    return sorted(posicoes2, key=lambda posicoes2: (posicoes2[1], posicoes2[0]))
+    # posicoes2 = list(map(lambda posicao: tuple((obter_pos_x(
+    #     posicao), obter_pos_y(posicao))), posicoes))
+    # return sorted(posicoes2, key=lambda posicoes2: (posicoes2[1], posicoes2[0]))
 
 
 # print(ordenar_posicoes(()))
@@ -392,10 +405,10 @@ def cria_prado(ultima_posicao, rochedos, animais, posicoes_animais):
         if not(eh_posicao(ultima_posicao) and type(rochedos) == type(animais) == type(posicoes_animais) == tuple and len(animais) == len(posicoes_animais) and len(animais) >= 1):
             argumentos_invalidos("cria_prado")
         for posicao in posicoes_animais:
-            if obter_pos_x(posicao) >= obter_pos_x(ultima_posicao) or obter_pos_y(posicao) >= obter_pos_y(ultima_posicao):
+            if not eh_posicao(posicao) or obter_pos_x(posicao) >= obter_pos_x(ultima_posicao) or obter_pos_y(posicao) >= obter_pos_y(ultima_posicao):
                 argumentos_invalidos("cria_prado")
         for rochedo in rochedos:
-            if obter_pos_x(rochedo) >= obter_pos_x(ultima_posicao) or obter_pos_y(rochedo) >= obter_pos_y(ultima_posicao):
+            if not eh_posicao(posicao) or obter_pos_x(rochedo) >= obter_pos_x(ultima_posicao) or obter_pos_y(rochedo) >= obter_pos_y(ultima_posicao):
                 argumentos_invalidos("cria_prado")
 
     def criar_estrutura_prado(max_x, max_y):
@@ -413,8 +426,11 @@ def cria_prado(ultima_posicao, rochedos, animais, posicoes_animais):
 
     def colocar_animais(animais, posicoes):
         for i in range(len(posicoes)):
-            posicao = posicoes[i]
-            prado[obter_pos_y(posicao)][obter_pos_x(posicao)] = animais[i]
+            posicao = cria_copia_posicao(posicoes[i])
+            if prado[obter_pos_y(posicao)][obter_pos_x(posicao)] != ".":
+                argumentos_invalidos("cria_prado")
+            prado[obter_pos_y(posicao)][obter_pos_x(posicao)
+                                        ] = cria_copia_animal(animais[i])
         return prado
 
     valida_cria_prado()
@@ -548,7 +564,7 @@ def eh_prado(prado):
     eh_prado: universal -> booleano
 
     Devolve True caso o argumento dado seja um TAD prado.
-    Caso contrário, devolve False.8
+    Caso contrário, devolve False.
     '''
     # if type(prado) == list and all(map(lambda y: type(y) == list and y != [], prado)):
     #     for y in range(len(prado)):
@@ -587,7 +603,8 @@ def eh_posicao_obstaculo(prado, posicao):
     Devolve True caso a posição dada do prado seja um rochedo.
     Caso contrário, devolve False.
     '''
-    # return obter_pos_y(posicao) <= obter_tamanho_y(prado) and obter_pos_x(posicao) <= obter_tamanho_x(prado) and obter_animal(prado, posicao) == "r"
+    if obter_pos_y(posicao) >= obter_tamanho_y(prado) or obter_pos_x(posicao) >= obter_tamanho_x(prado):
+        return True
     return obter_animal(prado, posicao) == "r"
 
 
@@ -598,7 +615,7 @@ def eh_posicao_livre(prado, posicao):
     Devolve True caso a posição dada do prado esteja livre.
     Caso contrário, devolve False.
     '''
-    return obter_animal(prado, posicao) == "."
+    return not (eh_posicao_animal(prado, posicao) or eh_posicao_obstaculo(prado, posicao))
 
 
 def prados_iguais(prado1, prado2):
@@ -689,6 +706,13 @@ def reproduz(prado, animal, posicao_filho):
     return prado
 
 
+def posicao_na_lista(posicao, lista):
+    for posi in lista:
+        if posicoes_iguais(posicao, posi):
+            return True
+    return False
+
+
 def geracao(prado):
     '''
     geracao: prado -> prado
@@ -696,7 +720,7 @@ def geracao(prado):
     posicoes_movimentadas = []
     posicoes_animais = obter_posicao_animais(prado)
     for posicao in posicoes_animais:
-        if posicao not in posicoes_movimentadas:
+        if not posicao_na_lista(posicao, posicoes_movimentadas):
             animal = obter_animal(prado, posicao)
             animal = aumenta_idade(animal)
             animal = aumenta_fome(animal)
@@ -773,8 +797,7 @@ def simula_ecossistema(ficheiro, geracoes, verboso):
         if espacos_livres == predadores or espacos_livres == presas:
             break
         prado = geracao(prado)
-        # print("\n Geração:" + str(g))
-        # print_prado(prado)
+        # mostra_geracao(prado, g)
         if (predadores != obter_numero_predadores(prado) or presas != obter_numero_presas(prado)) and verboso:
             mostra_geracao(prado, g)
         predadores = obter_numero_predadores(prado)
@@ -790,4 +813,7 @@ def simula_ecossistema(ficheiro, geracoes, verboso):
 # print("COMO DEVIA FICAR: \n Predadores: 1 vs Presas: 3 (Gen. 0)\n+----------+\n|..........|\n|.mL@@....m|\n|...m......|\n+----------+\nPredadores: 0 vs Presas: 28 (Gen. 20)\n+----------+\n|mmmmmmmmmm|\n|mmm@@mmmmm|\n|mmmmmmmmmm|\n+----------+\n(0, 28)")
 # print(simula_ecossistema('public_test_config.txt', 20, True))
 # print("COMO DEVIA FICAR: \n Predadores: 1 vs Presas: 3 (Gen. 0)\n+----------+\n|..........|\n|.mL@@....m|\n|...m......|\n+----------+\nPredadores: 1 vs Presas: 6 (Gen. 2)\n+----------+\n|...L......|\n|mm.@@....m|\n|...mm....m|\n+----------+\nPredadores: 0 vs Presas: 6 (Gen. 3)\n+----------+\n|.........m|\n|...@@....m|\n|mmmm......|\n+----------+\nPredadores: 0 vs Presas: 12 (Gen. 4)\n+----------+\n|........mm|\n|mmm@@....m|\n|mmmmm....m|\n+----------+\nPredadores: 0 vs Presas: 18 (Gen. 6)\n+----------+\n|mmm....mmm|\n|mmm@@..mmm|\n|mmmmm....m|\n+----------+\nPredadores: 0 vs Presas: 20 (Gen. 7)\n+----------+\n|mmmm..mmmm|\n|mmm@@..mmm|\n|mmmm.m.m..|\n+----------+\nPredadores: 0 vs Presas: 28 (Gen. 8)\n+----------+\n|mmmmmmmmmm|\n|mmm@@mmmmm|\n|mmmmmmmmmm|\n+----------+\n(0, 28)")
-# simula_ecossistema('teste202.txt', 20, True)
+# simula_ecossistema('teste202.txt', 25, True)
+
+# simula_ecossistema('teste.txt', 200, False)
+# print("--- %s seconds ---" % (time.time() - start_time))

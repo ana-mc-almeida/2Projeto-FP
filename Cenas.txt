@@ -14,6 +14,28 @@ DÚVIDAS:
     R - "obter_animal" só pode dar return num animal? e se for um rochedo? 
 
 
+ERROS EXECUÇÃO 17_11 (2):
+    118 cria_prado
+    119 cria_prado
+    152 eh_prado
+    156 eh_prado
+    158 eh_prado
+    159 eh_prado
+    224 
+    225
+
+ERROS EXECUÇÃO 17_11:
+        50 ordenar_posicoes
+            118 cria_prado
+            119 cria_prado
+    152 eh_prado
+    156 eh_prado
+    158 eh_prado
+    159 eh_prado
+        D - 210 TAD posicao
+    224 FAN prado
+        225 TAD geracao
+
 
 ERROS EXECUÇÃO 16_11 (2):
     I - 50 ordenar_posicoes
