@@ -13,11 +13,26 @@ DÚVIDAS:
     Posso usar a função "valida_cria_animal" dentro da função "eh_animal"?
     "obter_animal" só pode dar return num animal? e se for um rochedo?
 
-    50 ordenar_posicoes
+
+
+ERROS EXECUÇÃO 16_11 (2):
+I - 50 ordenar_posicoes
+    I - 116 cria_prado
+    I - 118 cria_prado
+    I - 119 cria_prado
+    I - 120 cria_prado
+I - 152 eh_prado -> ver se não há animais / obstáculos nas montanhas nem fora delas
+        156 eh_prado
+        158 eh_prado
+        159 eh_prado
+I - 202 simula_ecossistema -> está no grupo
+I - 203 simula_ecossistema -
+I - 224 FAN prado
+I - 225 barreiras geracao
 
 
 
-ERROS EXECUÇÃO:
+ERROS EXECUÇÃO 16_11 (1):
         25  geracao
         26  geracao
         27  simula

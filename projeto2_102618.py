@@ -383,8 +383,14 @@ def cria_prado(ultima_posicao, rochedos, animais, posicoes_animais):
 
     '''
     def valida_cria_prado():
-        if not(eh_posicao(ultima_posicao) and type(rochedos) == type(animais) == type(posicoes_animais) == tuple and len(animais) == len(posicoes_animais)):
+        if not(eh_posicao(ultima_posicao) and type(rochedos) == type(animais) == type(posicoes_animais) == tuple and len(animais) == len(posicoes_animais) and len(animais) >= 1):
             argumentos_invalidos("cria_prado")
+        for posicao in posicoes_animais:
+            if obter_pos_x(posicao) >= obter_pos_x(ultima_posicao) or obter_pos_y(posicao) >= obter_pos_y(ultima_posicao):
+                argumentos_invalidos("cria_prado")
+        for rochedo in rochedos:
+            if obter_pos_x(rochedo) >= obter_pos_x(ultima_posicao) or obter_pos_y(rochedo) >= obter_pos_y(ultima_posicao):
+                argumentos_invalidos("cria_prado")
 
     def criar_estrutura_prado(max_x, max_y):
         for y in range(max_y+1):
@@ -538,8 +544,8 @@ def eh_prado(prado):
     Devolve True caso o argumento dado seja um TAD prado.
     Caso contrário, devolve False.
     '''
-    # return type(prado) == list and all(map(lambda y: type(y) == list and y != [], prado))
-    return type(prado) == list and all(map(lambda y: type(y) == list and y != [] and all(map(lambda x: eh_posicao_animal(prado[y][x]) or eh_posicao_obstaculo(prado[y][x]) or eh_posicao_livre(prado[y][x]), y), prado)))
+    return type(prado) == list and all(map(lambda y: type(y) == list and y != [], prado))
+    # return type(prado) == list and all(map(lambda y: type(y) == list and y != [] and all(map(lambda x: eh_posicao_animal(prado[y][x]) or eh_posicao_obstaculo(prado[y][x]) or eh_posicao_livre(prado[y][x]), y), prado)))
 
 
 def eh_posicao_animal(prado, posicao):
