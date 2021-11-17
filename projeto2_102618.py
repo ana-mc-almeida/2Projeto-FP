@@ -495,7 +495,7 @@ def obter_posicao_animais(prado):
     return posicoes
 
 
-def obter_animal(prado, posicao):
+def obter_animal(prado, posicao):  # assumir que há sempre um animal na posição
     '''
     obter_animal: prado, posicao -> animal
 
@@ -652,6 +652,16 @@ def obter_movimento(prado, posicao):
 #
 #
 #
+def come(prado, animal, posicao_da_presa):
+    animal = reset_fome(animal)
+    prado = eliminar_animal(prado, posicao_da_presa)
+    return animal, prado
+
+
+def reproduz(prado, animal, posicao_filho):
+    animal_novo = reproduz_animal(animal)
+    prado = inserir_animal(prado, animal_novo, posicao_filho)
+    return prado
 
 
 def geracao(prado):
@@ -667,26 +677,15 @@ def geracao(prado):
             animal = aumenta_fome(animal)
             posicao_nova = obter_movimento(prado, posicao)
             if not posicoes_iguais(posicao, posicao_nova):  # muda de posição
-                # reproduz e come
-                if eh_animal_fertil(animal) and eh_presa(obter_animal(prado, posicao_nova)):
-                    prado = eliminar_animal(prado, posicao_nova)
-                    animal = reset_fome(animal)
-                    animal_novo = reproduz_animal(animal)
-                    prado = mover_animal(prado, posicao, posicao_nova)
-                    prado = inserir_animal(animal_novo, posicao)
-                elif eh_presa(obter_animal(prado, posicao_nova)):  # só come
-                    animal = reset_fome(animal)
-                    prado = eliminar_animal(prado, posicao_nova)
-                    prado = mover_animal(prado, posicao, posicao_nova)
-                elif eh_animal_faminto(animal):  # morre à fome
-                    prado = eliminar_animal(prado, posicao)
-                elif eh_animal_fertil(animal):    # só reproduz
-                    animal_novo = reproduz_animal(animal)
-                    prado = mover_animal(prado, posicao, posicao_nova)
-                    prado = inserir_animal(prado, animal_novo, posicao)
+                if eh_presa(obter_animal(prado, posicao_nova)):  # come
+                    animal, prado = come(prado, animal, posicao_nova)
+                prado = mover_animal(prado, posicao, posicao_nova)
+                if eh_animal_fertil(animal):
+                    prado = reproduz(prado, animal, posicao)
+                if eh_animal_faminto(animal):
+                    eliminar_animal(prado, posicao_nova)
                 else:
-                    prado = mover_animal(prado, posicao, posicao_nova)
-                posicoes_movimentadas.append(posicao_nova)
+                    posicoes_movimentadas.append(posicao_nova)
             elif eh_animal_faminto(animal):
                 prado = eliminar_animal(prado, posicao)
     return prado
@@ -742,12 +741,15 @@ def simula_ecossistema(ficheiro, geracoes, verboso):
     prado = cria_prado(ultima_posicao, rochedos, animais, posicoes_animais)
 
     mostra_geracao(prado, 0)
+    # print_prado(prado)
     predadores = obter_numero_predadores(prado)
     presas = obter_numero_presas(prado)
     for g in range(1, geracoes+1):
         if espacos_livres == predadores or espacos_livres == presas:
             break
         prado = geracao(prado)
+        # print("\n Geração:" + str(g))
+        # print_prado(prado)
         if (predadores != obter_numero_predadores(prado) or presas != obter_numero_presas(prado)) and verboso:
             mostra_geracao(prado, g)
         predadores = obter_numero_predadores(prado)
@@ -761,5 +763,6 @@ def simula_ecossistema(ficheiro, geracoes, verboso):
 
 # print(simula_ecossistema('public_test_config.txt', 20, False))
 # print("COMO DEVIA FICAR: \n Predadores: 1 vs Presas: 3 (Gen. 0)\n+----------+\n|..........|\n|.mL@@....m|\n|...m......|\n+----------+\nPredadores: 0 vs Presas: 28 (Gen. 20)\n+----------+\n|mmmmmmmmmm|\n|mmm@@mmmmm|\n|mmmmmmmmmm|\n+----------+\n(0, 28)")
-# simula_ecossistema('public_test_config.txt', 20, True)
+# print(simula_ecossistema('public_test_config.txt', 20, True))
 # print("COMO DEVIA FICAR: \n Predadores: 1 vs Presas: 3 (Gen. 0)\n+----------+\n|..........|\n|.mL@@....m|\n|...m......|\n+----------+\nPredadores: 1 vs Presas: 6 (Gen. 2)\n+----------+\n|...L......|\n|mm.@@....m|\n|...mm....m|\n+----------+\nPredadores: 0 vs Presas: 6 (Gen. 3)\n+----------+\n|.........m|\n|...@@....m|\n|mmmm......|\n+----------+\nPredadores: 0 vs Presas: 12 (Gen. 4)\n+----------+\n|........mm|\n|mmm@@....m|\n|mmmmm....m|\n+----------+\nPredadores: 0 vs Presas: 18 (Gen. 6)\n+----------+\n|mmm....mmm|\n|mmm@@..mmm|\n|mmmmm....m|\n+----------+\nPredadores: 0 vs Presas: 20 (Gen. 7)\n+----------+\n|mmmm..mmmm|\n|mmm@@..mmm|\n|mmmm.m.m..|\n+----------+\nPredadores: 0 vs Presas: 28 (Gen. 8)\n+----------+\n|mmmmmmmmmm|\n|mmm@@mmmmm|\n|mmmmmmmmmm|\n+----------+\n(0, 28)")
+# simula_ecossistema('teste202.txt', 20, True)

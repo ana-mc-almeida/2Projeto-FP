@@ -9,9 +9,9 @@ AINDA TENHO DE FAZER:
 
 
 DÚVIDAS:
-    Posso usar a função "argumentos_invalidos"?
+    R - Posso usar a função "argumentos_invalidos"?
     Posso usar a função "valida_cria_animal" dentro da função "eh_animal"?
-    "obter_animal" só pode dar return num animal? e se for um rochedo?
+    R - "obter_animal" só pode dar return num animal? e se for um rochedo? 
 
 
 
@@ -25,8 +25,8 @@ I - 152 eh_prado -> ver se não há animais / obstáculos nas montanhas nem fora
         156 eh_prado
         158 eh_prado
         159 eh_prado
-I - 202 simula_ecossistema -> está no grupo
-I - 203 simula_ecossistema -
+    I - 202 simula_ecossistema -> ver 1 a 1
+    I - 203 simula_ecossistema -
 I - 224 FAN prado
 I - 225 barreiras geracao
 
