@@ -6,19 +6,32 @@ ana.margarida.almeida@tecnico.ulisboa.pt
 
 
 def argumentos_invalidos(funct):
+    '''
+    argumentos_invalidos: nome da função -> raise ValueError
+
+    Levanta um ValueError para informar que os argumentos da função recebida são inválidos
+    '''
     raise ValueError(funct + ": argumentos invalidos")
 
 
 def is_str_n_nula(string):
+    '''
+    is_str_n_nula: universal -> booleano
+
+    Devolve True caso o argumento dado seja uma string não nula.
+    Caso contrário, devolve False.
+    '''
     return type(string) == str and len(string) > 0
 
 
 def is_int_positivo_ou_0(num):
-    return type(num) == int and num >= 0
+    '''
+    is_int_positivo_ou_0: universal -> booleano
 
-#
-#   TAD posicao
-#
+    Devolve True caso o argumento dado seja um número inteiro maior ou igual a 0.
+    Caso contrário, devolve False.
+    '''
+    return type(num) == int and num >= 0
 
 
 def cria_posicao(x, y):
@@ -36,19 +49,16 @@ def cria_copia_posicao(posicao):
     '''
     cria_copia_posicao: posicao -> posicao
 
-    Devolve uma cópia da posição recebida
+    Devolve uma cópia da posição recebida.
     '''
     return tuple(list(posicao))
-
-
-# print(cria_copia_posicao(cria_posicao(5, 4)))
 
 
 def obter_pos_x(posicao):
     '''
     obter_pos_x: posicao -> int
 
-    Devolve a abcissa da posição dada
+    Devolve a abscissa da posição dada.
     '''
     return posicao[0]
 
@@ -64,15 +74,12 @@ def obter_pos_y(posicao):
 
 def eh_posicao(arg):
     '''
-    universal -> booleano
+    eh_posicao: universal -> booleano
 
     Devolve True caso o argumento dado seja um TAD posicao.
     Caso contrário, devolve False.
     '''
     return type(arg) == tuple and len(arg) == 2 and is_int_positivo_ou_0(arg[0]) and is_int_positivo_ou_0(arg[1])
-
-
-# print(eh_posicao((int("89"), 0)))
 
 
 def posicoes_iguais(posicao1, posicao2):
@@ -112,9 +119,6 @@ def obter_posicoes_adjacentes(posicao):
     return (cria_posicao(x, y-1), cria_posicao(x+1, y), cria_posicao(x, y+1), cria_posicao(x-1, y))
 
 
-# print(obter_posicoes_adjacentes(cria_posicao(0, 0)))
-
-
 def ordenar_posicoes(posicoes):
     '''
     ordenar_posicoes: tuplo -> tuplo
@@ -122,39 +126,27 @@ def ordenar_posicoes(posicoes):
     Devolve um tuplo com posições ordenadas por ordem de leitura do prado.
     '''
     posicoes = list(posicoes)
+
     for i in range(len(posicoes)):
         primeiro = cria_copia_posicao(posicoes[i])
         primeiro_indice = i
         for j in range(i+1, len(posicoes)):
             atual = cria_copia_posicao(posicoes[j])
-            atual_indice = j
             if obter_pos_y(atual) < obter_pos_y(primeiro) or (obter_pos_y(atual) == obter_pos_y(primeiro) and obter_pos_x(atual) < obter_pos_x(primeiro)):
                 primeiro = cria_copia_posicao(posicoes[j])
                 primeiro_indice = j
         posicoes[i], posicoes[primeiro_indice] = cria_copia_posicao(
             posicoes[primeiro_indice]), cria_copia_posicao(posicoes[i])
+
     return tuple(posicoes)
-    # return sorted(posicoes, key=lambda posicao: (obter_pos_y(posicao), obter_pos_x(posicao)))
-    # posicoes2 = list(map(lambda posicao: tuple((obter_pos_x(
-    #     posicao), obter_pos_y(posicao))), posicoes))
-    # return sorted(posicoes2, key=lambda posicoes2: (posicoes2[1], posicoes2[0]))
-
-
-# print(ordenar_posicoes(()))
-# p2 = cria_posicao(1, 1)
-# t = obter_posicoes_adjacentes(p2)
-# print(tuple(posicao_para_str(p) for p in ordenar_posicoes(t)))
-
-#
-#   TAD animal
-#
 
 
 def valida_cria_animal(especie, freq_reproducao, freq_alimentacao):
     '''
     valida_cria_animal: universal,  universal,  universal -> booleano
 
-
+    Retorna True or False, dependendo se os argumentos dados são válidos ou não.
+    Para isso, a espécie deve ser uma string não nula, a frequência de reprodução deve ser um inteiro maior do que zero e a frequência de alimentação um inteiro maior ou igual a zero.
     '''
     return is_str_n_nula(especie) and type(freq_reproducao) == int and freq_reproducao > 0 and is_int_positivo_ou_0(freq_alimentacao)
 
@@ -165,9 +157,9 @@ def cria_animal(especie, freq_reproducao, freq_alimentacao):
 
     Devolve o animal correspondente às informações recebidas.
     '''
-    if valida_cria_animal(especie, freq_reproducao, freq_alimentacao):
-        return {"especie": especie, "idade": 0, "freq_alimentacao": freq_alimentacao, "fome": 0, "freq_reproducao": freq_reproducao}
-    argumentos_invalidos("cria_animal")
+    if not valida_cria_animal(especie, freq_reproducao, freq_alimentacao):
+        argumentos_invalidos("cria_animal")
+    return {"especie": especie, "idade": 0, "freq_alimentacao": freq_alimentacao, "fome": 0, "freq_reproducao": freq_reproducao}
 
 
 def cria_copia_animal(animal):
@@ -251,7 +243,7 @@ def eh_animal(arg):
     Devolve True caso o argumento dado seja um TAD animal.
     Caso contrário, devolve False.
     '''
-    if type(arg) == dict and len(arg) == 5 and {"especie", "idade", "fome", "freq_alimentacao", "freq_reproducao"} <= arg.keys():
+    if type(arg) == dict and {"especie", "idade", "fome", "freq_alimentacao", "freq_reproducao"} == arg.keys():
         return valida_cria_animal(obter_especie(arg), obter_freq_reproducao(arg), obter_freq_alimentacao(arg)) and is_int_positivo_ou_0(obter_fome(arg)) and is_int_positivo_ou_0(obter_idade(arg))
     return False
 
@@ -285,6 +277,7 @@ def aumenta_fome(animal):
     '''
     if eh_predador(animal):
         animal["fome"] += 1
+
     return animal
 
 
@@ -297,6 +290,7 @@ def reset_fome(animal):
     '''
     if eh_predador(animal):
         animal["fome"] = 0
+
     return animal
 
 
@@ -315,10 +309,11 @@ def animal_para_char(animal):
     animal_para_char: animal -> str
 
     Devolve o primeiro caracter da espécie do animal recebido.
-    Caso este animal seja um predador o caracter será maiúsculo.
+    Caso este animal seja um predador, o caracter será maiúsculo.
     Caso contrário, o caracter será minúsculo.
     '''
     especie = obter_especie(animal)
+
     if eh_predador(animal):
         return especie[0].upper()
     return especie[0].lower()
@@ -358,6 +353,7 @@ def eh_animal_faminto(animal):
 
     Devolve True caso o animal dado tenha um valor de fome igual ou superior à sua frequência de alimentação.
     Caso contrário, devolve False.
+    Se for uma presa, será sempre devolvido False.
     '''
     if eh_presa(animal):
         return False
@@ -371,85 +367,9 @@ def reproduz_animal(animal):
     Devolve um novo animal da mesma espécie do animal recebido, idade e fome igual a 0.
     Modifica destrutivamente animal recebido, alterando a sua idade para 0.
     '''
-    novo_animal = reset_idade((reset_fome(cria_copia_animal(animal))))
     animal = reset_idade(animal)
-    # return novo_animal, animal
+    novo_animal = reset_fome(cria_copia_animal(animal))
     return novo_animal
-
-
-# animal = aumenta_idade(cria_animal("anan", 45, 5))
-# print(reproduz_animal(animal))
-# print(animal)
-
-#
-# TAD prado
-#
-
-
-def print_prado(prado):  # não é para o projeto
-    for y in range(len(prado)):
-        for x in range(len(prado[y])):
-            if eh_animal(prado[y][x]):
-                print("a", end=" ")
-            else:
-                print(prado[y][x], end=" ")
-        print()
-
-
-def cria_prado(ultima_posicao, rochedos, animais, posicoes_animais):
-    '''
-    cria_prado: posicao, tuplo, tuplo, tuplo -> prado
-
-    '''
-
-    def criar_estrutura_prado(max_x, max_y):
-        for y in range(max_y+1):
-            prado.append([])
-            for x in range(max_x+1):
-                if y == 0 or y == max_y or x == 0 or x == max_x:
-                    prado[y] += "r"
-                else:
-                    prado[y] += "."
-
-    def colocar_rochedos(rochedos):
-        for rochedo in rochedos:
-            if not eh_posicao(rochedo) or obter_pos_x(rochedo) >= obter_pos_x(ultima_posicao) or obter_pos_y(rochedo) >= obter_pos_y(ultima_posicao) or prado[obter_pos_y(rochedo)][obter_pos_x(rochedo)] != ".":
-                argumentos_invalidos("cria_prado")
-            prado[obter_pos_y(rochedo)][obter_pos_x(rochedo)] = "r"
-
-    def colocar_animais(animais, posicoes):
-        for i in range(len(posicoes)):
-            if not eh_posicao(posicoes[i]) or not eh_animal(animais[i]):
-                argumentos_invalidos("cria_prado")
-            posicao = cria_copia_posicao(posicoes[i])
-            if obter_pos_x(posicao) >= obter_pos_x(ultima_posicao) or obter_pos_y(posicao) >= obter_pos_y(ultima_posicao):
-                argumentos_invalidos("cria_prado")
-            if prado[obter_pos_y(posicao)][obter_pos_x(posicao)] != ".":
-                argumentos_invalidos("cria_prado")
-            prado[obter_pos_y(posicao)][obter_pos_x(posicao)
-                                        ] = cria_copia_animal(animais[i])
-        return prado
-
-    if not(eh_posicao(ultima_posicao) and type(rochedos) == type(animais) == type(posicoes_animais) == tuple and len(animais) == len(posicoes_animais) and len(animais) >= 1):
-        argumentos_invalidos("cria_prado")
-
-    prado = []
-    max_x = obter_pos_x(ultima_posicao)
-    max_y = obter_pos_y(ultima_posicao)
-
-    criar_estrutura_prado(max_x, max_y)
-    colocar_rochedos(rochedos)
-    colocar_animais(animais, posicoes_animais)
-
-    return(prado)
-
-def cria_copia_prado(prado):
-    '''
-    cria_copia_prado: prado -> prado
-
-    Devolve uma cópia do prado recebido.
-    '''
-    return [[x for x in linha] for linha in prado]
 
 
 def obter_tamanho_x(prado):
@@ -468,6 +388,90 @@ def obter_tamanho_y(prado):
     Devolve o valor inteiro que corresponde à dimensão Ny do prado recebido.
     '''
     return len(prado)
+
+
+def esta_fora_limite_prado(prado, posicao):
+    '''
+    esta_fora_limite_prado: prado x posicao -> booleano
+
+    Devolve True caso a posicao recebida esteja para além do limite do prado recebido.
+    Caso contrário, devolve False.
+    '''
+    return obter_pos_x(posicao) >= obter_tamanho_x(prado) or obter_pos_y(posicao) >= obter_tamanho_y(prado)
+
+
+def cria_prado(ultima_posicao, rochedos, animais, posicoes_animais):
+    '''
+    cria_prado: posicao, tuplo, tuplo, tuplo -> prado
+
+    Devolve o prado correspondente às informações recebidas.
+    '''
+    def criar_estrutura_prado(max_x, max_y):
+        '''
+        criar_estrutura_prado: int x int
+
+        Cria o prado, correspondente dimensões recebidas, rodeado de montanhas.
+        '''
+        for y in range(max_y+1):
+            prado.append([])
+            for x in range(max_x+1):
+                if y == 0 or y == max_y or x == 0 or x == max_x:
+                    prado[y] += "r"
+                else:
+                    prado[y] += "."
+
+    def colocar_rochedos(rochedos):
+        '''
+        colocar_rochedos: tuplo
+
+        Coloca rochedos nas posições recebidas.
+        '''
+        for rochedo in rochedos:
+            if not eh_posicao(rochedo) or esta_fora_limite_prado(prado, rochedo) or prado[obter_pos_y(rochedo)][obter_pos_x(rochedo)] != ".":
+                argumentos_invalidos("cria_prado")
+            prado[obter_pos_y(rochedo)][obter_pos_x(rochedo)] = "r"
+        return prado
+
+    def colocar_animais(animais, posicoes):
+        '''
+        colocar_animais: tupo, tuplo
+
+        Coloca os animais recebidos nas respectivas posições.
+        '''
+        for i in range(len(posicoes)):
+            if not eh_posicao(posicoes[i]) or not eh_animal(animais[i]):
+                argumentos_invalidos("cria_prado")
+
+            posicao = cria_copia_posicao(posicoes[i])
+            if esta_fora_limite_prado(prado, posicao) or prado[obter_pos_y(posicao)][obter_pos_x(posicao)] != ".":
+                argumentos_invalidos("cria_prado")
+
+            prado[obter_pos_y(posicao)][obter_pos_x(posicao)
+                                        ] = cria_copia_animal(animais[i])
+
+        return prado
+
+    if not(eh_posicao(ultima_posicao) and type(rochedos) == type(animais) == type(posicoes_animais) == tuple and len(animais) == len(posicoes_animais) and len(animais) >= 1):
+        argumentos_invalidos("cria_prado")
+
+    prado = []
+    max_x = obter_pos_x(ultima_posicao)
+    max_y = obter_pos_y(ultima_posicao)
+
+    criar_estrutura_prado(max_x, max_y)
+    colocar_rochedos(rochedos)
+    colocar_animais(animais, posicoes_animais)
+
+    return(prado)
+
+
+def cria_copia_prado(prado):
+    '''
+    cria_copia_prado: prado -> prado
+
+    Devolve uma cópia do prado recebido.
+    '''
+    return [[x for x in linha] for linha in prado]
 
 
 def obter_numero_predadores(prado):
@@ -513,7 +517,7 @@ def obter_posicao_animais(prado):
     return posicoes
 
 
-def obter_animal(prado, posicao):  # assumir que há sempre um animal na posição
+def obter_animal(prado, posicao):
     '''
     obter_animal: prado, posicao -> animal
 
@@ -522,7 +526,7 @@ def obter_animal(prado, posicao):  # assumir que há sempre um animal na posiç�
     return prado[obter_pos_y(posicao)][obter_pos_x(posicao)]
 
 
-def eliminar_animal(prado, posicao):
+def eliminar_animal(prado, posicao):  # assumir que é sempre um animal na posição
     '''
     eliminar_animal: prado, posicao -> prado
 
@@ -562,21 +566,19 @@ def eh_prado(prado):
     Devolve True caso o argumento dado seja um TAD prado.
     Caso contrário, devolve False.
     '''
-
     if type(prado) != list or len(obter_posicao_animais(prado)) < 1 or any(map(lambda y: type(y) != list or y == [], prado)):
         return False
 
-    lista = list(map(lambda y: type(y) == list and y != [], prado))
-    for y in lista:
-        if any(map(lambda x: not eh_animal(prado[y][x]) and prado[y][x] != "r" and prado[y][x] != ".", lista)):
+    for y in range(len(prado)):
+        if any(map(lambda x: not eh_animal(prado[y][x]) and prado[y][x] != "r" and prado[y][x] != ".", range(len(prado[y])))):
             return False
-    return True
 
+    return True
 
 
 def eh_posicao_animal(prado, posicao):
     '''
-    eh_posicao_animal: prado, posicao -> booleano
+    eh_posicao_animal: prado x posicao -> booleano
 
     Devolve True caso a posição dada do prado esteja ocupada por um animal.
     Caso contrário, devolve False.
@@ -586,12 +588,12 @@ def eh_posicao_animal(prado, posicao):
 
 def eh_posicao_obstaculo(prado, posicao):
     '''
-    eh_posicao_obstaculo: prado, posicao -> booleano
+    eh_posicao_obstaculo: prado x posicao -> booleano
 
     Devolve True caso a posição dada do prado seja um rochedo.
     Caso contrário, devolve False.
     '''
-    if obter_pos_y(posicao) >= obter_tamanho_y(prado) or obter_pos_x(posicao) >= obter_tamanho_x(prado):
+    if esta_fora_limite_prado(prado, posicao):
         return True
     return obter_animal(prado, posicao) == "r"
 
@@ -661,47 +663,30 @@ def obter_movimento(prado, posicao):
     posicao_nova = cria_copia_posicao(posicao)
     valor_numerico = obter_valor_numerico(prado, posicao)
     posicoes_adjacentes = obter_posicoes_adjacentes(posicao)
-    movimentos = []
+    movimentos = ()
 
     if eh_predador(obter_animal(prado, posicao)):
         for posicao_adjacente in posicoes_adjacentes:
             if eh_presa(obter_animal(prado, posicao_adjacente)):
-                movimentos.append(cria_copia_posicao(posicao_adjacente))
-    if movimentos == []:  # significa que a posição dada tem uma presa ou não tem presas à volta
+                movimentos += (cria_copia_posicao(posicao_adjacente),)
+    if not len(movimentos):  # significa que a posição dada tem uma presa ou não tem presas à volta
         for posicao_adjacente in posicoes_adjacentes:
             if eh_posicao_livre(prado, posicao_adjacente):
-                movimentos.append(cria_copia_posicao(posicao_adjacente))
-    if movimentos != []:
-        i = valor_numerico % len(movimentos)
-        posicao_nova = cria_copia_posicao(movimentos[i])
+                movimentos += (cria_copia_posicao(posicao_adjacente),)
+    if len(movimentos):
+        posicao_nova = cria_copia_posicao(
+            movimentos[valor_numerico % len(movimentos)])
     return posicao_nova
 
-# dim = cria_posicao(11, 4)
-# obs = (cria_posicao(4, 2), cria_posicao(5, 2))
-# an1 = tuple(cria_animal('rabbit', 5, 0) for i in range(3))
-# an2 = (cria_animal('lynx', 20, 15),)
-# pos = tuple(cria_posicao(p[0], p[1]) for p in ((5, 1), (7, 2), (10, 1), (6, 1)))
-# prado = cria_prado(dim, obs, an1 + an2, pos)
-# print(obter_movimento(prado, [1,8]))
-#
-#
-#
 
+def posicao_no_tuplo(posicao, tuplo_posicoes):
+    '''
+    posicao_na_lista: posicao x tuplo posicoes -> booleano
 
-def come(prado, animal, posicao_da_presa):
-    animal = reset_fome(animal)
-    prado = eliminar_animal(prado, posicao_da_presa)
-    return animal, prado
-
-
-def reproduz(prado, animal, posicao_filho):
-    animal_novo = reproduz_animal(animal)
-    prado = inserir_animal(prado, animal_novo, posicao_filho)
-    return prado
-
-
-def posicao_na_lista(posicao, lista):
-    for posi in lista:
+    Devolve True caso a posição esteja contida no tuplo de posições.
+    Caso contrário, devolve False.
+    '''
+    for posi in tuplo_posicoes:
         if posicoes_iguais(posicao, posi):
             return True
     return False
@@ -710,54 +695,87 @@ def posicao_na_lista(posicao, lista):
 def geracao(prado):
     '''
     geracao: prado -> prado
+
+    Devolve o prado, após a sua evolução (correspondente a uma geração).
     '''
-    posicoes_movimentadas = []
+    posicoes_movimentadas = ()
     posicoes_animais = obter_posicao_animais(prado)
+
     for posicao in posicoes_animais:
-        if not posicao_na_lista(posicao, posicoes_movimentadas):
+        if not posicao_no_tuplo(posicao, posicoes_movimentadas):
             animal = obter_animal(prado, posicao)
             animal = aumenta_idade(animal)
             animal = aumenta_fome(animal)
             posicao_nova = obter_movimento(prado, posicao)
             if not posicoes_iguais(posicao, posicao_nova):  # muda de posição
+
                 if eh_presa(obter_animal(prado, posicao_nova)):  # come
-                    animal, prado = come(prado, animal, posicao_nova)
+                    animal = reset_fome(animal)
+                    prado = eliminar_animal(prado, posicao_nova)
+
                 prado = mover_animal(prado, posicao, posicao_nova)
+
                 if eh_animal_fertil(animal):
-                    prado = reproduz(prado, animal, posicao)
+                    animal_novo = reproduz_animal(animal)
+                    prado = inserir_animal(prado, animal_novo, posicao)
+
                 if eh_animal_faminto(animal):
                     eliminar_animal(prado, posicao_nova)
                 else:
-                    posicoes_movimentadas.append(posicao_nova)
+                    posicoes_movimentadas += (cria_copia_posicao(posicao_nova),)
+
             elif eh_animal_faminto(animal):
                 prado = eliminar_animal(prado, posicao)
+
     return prado
 
 
 def get_ultima_posicao(line):
+    '''
+    get_ultima_posicao: string -> posicao
+
+    Devolve a posição correspondente à representação externa recebida.
+    '''
     ultima_posicao_re = eval(line)  # re = representação externa
     return cria_posicao(ultima_posicao_re[0], ultima_posicao_re[1])
 
 
 def get_rochedos(line):
+    '''
+    get_rochedos: string -> tuplo posicoes
+
+    Devolve um tuplo de posições correspondentes à representação externa recebida.
+    '''
     rochedos = ()
-    rochedos_re = eval(line)
+    rochedos_re = eval(line)  # re = representação externa
     for rochedo_re in rochedos_re:
         rochedos += (cria_posicao(rochedo_re[0], rochedo_re[1]),)
     return rochedos
 
 
 def get_animais_e_posicoes(linhas):
+    '''
+    get_animais_e_posicoes: string -> tuplo animais, tuplo posicoes
+
+    Devolve um tuplo de animais e outro de posições correspondentes à representação externa recebida.
+    '''
     animais = ()
     posicoes_animais = ()
     for linha in linhas:
-        tudo = eval(linha)
-        posicoes_animais += (cria_posicao(tudo[-1][0], tudo[-1][1]),)
-        animais += (cria_animal(tudo[0], tudo[1], tudo[2]),)
+        animal_e_posicao = eval(linha)
+        posicoes_animais += (cria_posicao(
+            animal_e_posicao[-1][0], animal_e_posicao[-1][1]),)
+        animais += (cria_animal(animal_e_posicao[0],
+                    animal_e_posicao[1], animal_e_posicao[2]),)
     return animais, posicoes_animais
 
 
 def mostra_geracao(prado, g):
+    '''
+    mostra_geracao: prado x int
+
+    Mostra o número animais, a geração e o prado.
+    '''
     print("Predadores: " + str(obter_numero_predadores(prado)), end=" ")
     print("vs", end=" ")
     print("Presas: " + str(obter_numero_presas(prado)), end=" ")
@@ -765,9 +783,11 @@ def mostra_geracao(prado, g):
     print(prado_para_str(prado))
 
 
-def simula_ecossistema(ficheiro, geracoes, verboso):
+def ler_ficheiro(ficheiro):
     '''
-    simula_ecossistema: str, int, booleano -> tuplo
+    ler_ficheiro: ficheiro -> prado
+
+    Devolve o prado correspondente às informações contidas no ficheiro
     '''
     file = open(ficheiro, "r")
 
@@ -776,22 +796,31 @@ def simula_ecossistema(ficheiro, geracoes, verboso):
     rochedos = get_rochedos(linhas[1])
     animais, posicoes_animais = get_animais_e_posicoes(linhas[2:])
 
-    espacos_livres = (obter_pos_x(ultima_posicao) - 2) * \
-        (obter_pos_y(ultima_posicao) - 2) - len(rochedos)
-
     file.close()
 
-    prado = cria_prado(ultima_posicao, rochedos, animais, posicoes_animais)
+    return cria_prado(ultima_posicao, rochedos, animais, posicoes_animais)
+
+
+def simula_ecossistema(ficheiro, geracoes, verboso):
+    '''
+    simula_ecossistema: str, int, booleano -> tuplo
+
+    Devolve um tuplo que indica o número de predadores e presas, respectivamente, no fim da simulação.
+    '''
+    prado = cria_copia_prado(ler_ficheiro(ficheiro))
 
     mostra_geracao(prado, 0)
-    # print_prado(prado)
+
     predadores = obter_numero_predadores(prado)
     presas = obter_numero_presas(prado)
+
     for g in range(1, geracoes+1):
-        if espacos_livres == predadores or espacos_livres == presas:
+
+        prado_novo = geracao(prado)
+        if prados_iguais(prado, prado_novo):
             break
-        prado = geracao(prado)
-        # mostra_geracao(prado, g)
+        prado = cria_copia_prado(prado_novo)
+
         if (predadores != obter_numero_predadores(prado) or presas != obter_numero_presas(prado)) and verboso:
             mostra_geracao(prado, g)
         predadores = obter_numero_predadores(prado)
@@ -801,13 +830,3 @@ def simula_ecossistema(ficheiro, geracoes, verboso):
         mostra_geracao(prado, g)
 
     return (obter_numero_predadores(prado), obter_numero_presas(prado))
-
-
-# print(simula_ecossistema('public_test_config.txt', 20, False))
-# print("COMO DEVIA FICAR: \n Predadores: 1 vs Presas: 3 (Gen. 0)\n+----------+\n|..........|\n|.mL@@....m|\n|...m......|\n+----------+\nPredadores: 0 vs Presas: 28 (Gen. 20)\n+----------+\n|mmmmmmmmmm|\n|mmm@@mmmmm|\n|mmmmmmmmmm|\n+----------+\n(0, 28)")
-# print(simula_ecossistema('public_test_config.txt', 20, True))
-# print("COMO DEVIA FICAR: \n Predadores: 1 vs Presas: 3 (Gen. 0)\n+----------+\n|..........|\n|.mL@@....m|\n|...m......|\n+----------+\nPredadores: 1 vs Presas: 6 (Gen. 2)\n+----------+\n|...L......|\n|mm.@@....m|\n|...mm....m|\n+----------+\nPredadores: 0 vs Presas: 6 (Gen. 3)\n+----------+\n|.........m|\n|...@@....m|\n|mmmm......|\n+----------+\nPredadores: 0 vs Presas: 12 (Gen. 4)\n+----------+\n|........mm|\n|mmm@@....m|\n|mmmmm....m|\n+----------+\nPredadores: 0 vs Presas: 18 (Gen. 6)\n+----------+\n|mmm....mmm|\n|mmm@@..mmm|\n|mmmmm....m|\n+----------+\nPredadores: 0 vs Presas: 20 (Gen. 7)\n+----------+\n|mmmm..mmmm|\n|mmm@@..mmm|\n|mmmm.m.m..|\n+----------+\nPredadores: 0 vs Presas: 28 (Gen. 8)\n+----------+\n|mmmmmmmmmm|\n|mmm@@mmmmm|\n|mmmmmmmmmm|\n+----------+\n(0, 28)")
-# simula_ecossistema('teste202.txt', 25, True)
-
-# simula_ecossistema('teste.txt', 200, False)
-# print("--- %s seconds ---" % (time.time() - start_time))
