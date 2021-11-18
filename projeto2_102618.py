@@ -408,7 +408,10 @@ def cria_prado(ultima_posicao, rochedos, animais, posicoes_animais):
             if not eh_posicao(posicao) or obter_pos_x(posicao) >= obter_pos_x(ultima_posicao) or obter_pos_y(posicao) >= obter_pos_y(ultima_posicao):
                 argumentos_invalidos("cria_prado")
         for rochedo in rochedos:
-            if not eh_posicao(posicao) or obter_pos_x(rochedo) >= obter_pos_x(ultima_posicao) or obter_pos_y(rochedo) >= obter_pos_y(ultima_posicao):
+            if not eh_posicao(rochedo) or obter_pos_x(rochedo) >= obter_pos_x(ultima_posicao) or obter_pos_y(rochedo) >= obter_pos_y(ultima_posicao):
+                argumentos_invalidos("cria_prado")
+        for animal in animais:
+            if not eh_animal(animal):
                 argumentos_invalidos("cria_prado")
 
     def criar_estrutura_prado(max_x, max_y):
@@ -574,15 +577,39 @@ def eh_prado(prado):
     #     return True
     # return False
     # return type(prado) == list and all(map(lambda y: type(y) == list and y != [] and all(map(lambda x: eh_posicao_animal(prado[y][x]) or eh_posicao_obstaculo(prado[y][x]) or eh_posicao_livre(prado[y][x]), y), prado)))
-    return type(prado) == list and all(map(lambda y: type(y) == list and y != [] and all(map(lambda x: eh_posicao_animal(prado[y][x]) or eh_posicao_obstaculo(prado[y][x]) or eh_posicao_livre(prado[y][x]), y), prado))) and len(obter_posicao_animais(prado)) > 0
+    # print(type(prado) == list)
+
+    # print(any(lista))
+    # for y in lista:
+    #     lista2 = all(map(lambda x: eh_animal(
+    #         prado[y][x]) or prado[y][x] == "r" or prado[y][x] == ".", lista))
+    #     print(lista2)
+    # # print(all(map(lambda y: type(y) == list and y != []), prado))
+    # # print(all(map(lambda y: type(y) == list and y != [] and all(map(lambda x: eh_posicao_animal(
+    # #     prado[y][x]) or eh_posicao_obstaculo(prado[y][x]) or eh_posicao_livre(prado[y][x]), y), prado))))
+    # print(len(obter_posicao_animais(prado)) > 0)
+
+    # return type(prado) == list and all(map(lambda y: type(y) == list and y != [] and all(map(lambda x: eh_animal(
+    #         prado[y][x]) or prado[y][x] == "r" or prado[y][x] == ".")), prado))
+
+    if type(prado) != list or len(obter_posicao_animais(prado)) < 1 or any(map(lambda y: type(y) != list or y == [], prado)):
+        return False
+
+    lista = list(map(lambda y: type(y) == list and y != [], prado))
+    for y in lista:
+        if any(map(lambda x: not eh_animal(prado[y][x]) and prado[y][x] != "r" and prado[y][x] != ".", lista)):
+            return False
+    return True
 
 
-# prado = cria_prado((5,5), ((3,4),(7,7),(2,5)), (cria_animal("aaa", 5,5),cria_animal("bbb",8,9)), ((5,4), (1,1)))
-# prado = cria_prado((5, 5), ((3, 4), (4, 4), (2, 4)), (cria_animal(
-#     "aaa", 5, 5), cria_animal("bbb", 8, 9)), ((4, 4), (1, 1)))
+# print(eh_prado(cria_prado(cria_posicao(2, 2), (),
+#       (cria_animal("a", 5, 6),), (cria_posicao(1, 1),))))
+
+# prado = cria_prado((5, 5), ((3, 4), (2, 4)), (cria_animal("aaa", 5, 5), cria_animal("bbb", 8, 9)), ((4, 4), (1, 1)))
+# prado = cria_prado((5, 5), ((3, 4), (2, 4)), (cria_animal("aaa", 5, 5), cria_animal("bbb", 8, 9)), ((4, 4), (1, 1)))
 # prado = [['r', 'r', 'r', 'r', 'r', 'r'], ['r', cria_animal("a", 9, 8), '.', '.', '.', 'r'], ['r', '.', '.', '.', '.', 'r'], [
 #     'r', '.', '.', '.', '.', 'r'], ['r', '.', 'r', 'r', cria_animal("a", 9, 8), 'r'], ['r', 'r', 'r', cria_animal("a", 9, 8), 'r', 'r']]
-# print_prado(prado)
+# # print_prado(prado)
 # print(eh_prado(prado))
 
 
@@ -678,17 +705,23 @@ def obter_movimento(prado, posicao):
     if eh_predador(obter_animal(prado, posicao)):
         for posicao_adjacente in posicoes_adjacentes:
             if eh_presa(obter_animal(prado, posicao_adjacente)):
-                movimentos.append(posicao_adjacente)
+                movimentos.append(cria_copia_posicao(posicao_adjacente))
     if movimentos == []:  # significa que a posição dada tem uma presa ou não tem presas à volta
         for posicao_adjacente in posicoes_adjacentes:
             if eh_posicao_livre(prado, posicao_adjacente):
-                movimentos.append(posicao_adjacente)
+                movimentos.append(cria_copia_posicao(posicao_adjacente))
     if movimentos != []:
         i = valor_numerico % len(movimentos)
         posicao_nova = cria_copia_posicao(movimentos[i])
     return posicao_nova
 
-
+dim = cria_posicao(11, 4)
+obs = (cria_posicao(4, 2), cria_posicao(5, 2))
+an1 = tuple(cria_animal('rabbit', 5, 0) for i in range(3))
+an2 = (cria_animal('lynx', 20, 15),)
+pos = tuple(cria_posicao(p[0], p[1]) for p in ((5, 1), (7, 2), (10, 1), (6, 1)))
+prado = cria_prado(dim, obs, an1 + an2, pos)
+print(obter_movimento(prado, [1,8]))
 #
 #
 #

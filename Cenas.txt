@@ -13,6 +13,10 @@ DÚVIDAS:
     Posso usar a função "valida_cria_animal" dentro da função "eh_animal"?
     R - "obter_animal" só pode dar return num animal? e se for um rochedo? 
 
+ERROS EXECUÇÃO 17_11 (3):
+    119 cria_prado -> verificar que não há duas rochas no mesmo sítio nem dois animais
+    224
+    225
 
 ERROS EXECUÇÃO 17_11 (2):
     118 cria_prado
