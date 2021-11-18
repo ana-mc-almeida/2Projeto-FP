@@ -818,10 +818,7 @@ def simula_ecossistema(ficheiro, geracoes, verboso):
 
     for g in range(1, geracoes+1):
 
-        prado_novo = geracao(prado)
-        if prados_iguais(prado, prado_novo):
-            break
-        prado = cria_copia_prado(prado_novo)
+        prado = cria_copia_prado(geracao(prado))
 
         if (predadores != obter_numero_predadores(prado) or presas != obter_numero_presas(prado)) and verboso:
             mostra_geracao(prado, g)
@@ -832,10 +829,3 @@ def simula_ecossistema(ficheiro, geracoes, verboso):
         mostra_geracao(prado, g)
 
     return (obter_numero_predadores(prado), obter_numero_presas(prado))
-
-
-print(simula_ecossistema('public_test_config.txt', 20, False))
-print("COMO DEVIA FICAR: \n Predadores: 1 vs Presas: 3 (Gen. 0)\n+----------+\n|..........|\n|.mL@@....m|\n|...m......|\n+----------+\nPredadores: 0 vs Presas: 28 (Gen. 20)\n+----------+\n|mmmmmmmmmm|\n|mmm@@mmmmm|\n|mmmmmmmmmm|\n+----------+\n(0, 28)")
-# print(simula_ecossistema('public_test_config.txt', 20, True))
-# print("COMO DEVIA FICAR: \n Predadores: 1 vs Presas: 3 (Gen. 0)\n+----------+\n|..........|\n|.mL@@....m|\n|...m......|\n+----------+\nPredadores: 1 vs Presas: 6 (Gen. 2)\n+----------+\n|...L......|\n|mm.@@....m|\n|...mm....m|\n+----------+\nPredadores: 0 vs Presas: 6 (Gen. 3)\n+----------+\n|.........m|\n|...@@....m|\n|mmmm......|\n+----------+\nPredadores: 0 vs Presas: 12 (Gen. 4)\n+----------+\n|........mm|\n|mmm@@....m|\n|mmmmm....m|\n+----------+\nPredadores: 0 vs Presas: 18 (Gen. 6)\n+----------+\n|mmm....mmm|\n|mmm@@..mmm|\n|mmmmm....m|\n+----------+\nPredadores: 0 vs Presas: 20 (Gen. 7)\n+----------+\n|mmmm..mmmm|\n|mmm@@..mmm|\n|mmmm.m.m..|\n+----------+\nPredadores: 0 vs Presas: 28 (Gen. 8)\n+----------+\n|mmmmmmmmmm|\n|mmm@@mmmmm|\n|mmmmmmmmmm|\n+----------+\n(0, 28)")
-# print(simula_ecossistema('teste202.txt', 25, True))
