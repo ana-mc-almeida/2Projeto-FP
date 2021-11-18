@@ -135,8 +135,7 @@ def ordenar_posicoes(posicoes):
             if obter_pos_y(atual) < obter_pos_y(primeiro) or (obter_pos_y(atual) == obter_pos_y(primeiro) and obter_pos_x(atual) < obter_pos_x(primeiro)):
                 primeiro = cria_copia_posicao(posicoes[j])
                 primeiro_indice = j
-        posicoes[i], posicoes[primeiro_indice] = cria_copia_posicao(
-            posicoes[primeiro_indice]), cria_copia_posicao(posicoes[i])
+        posicoes[i], posicoes[primeiro_indice] = cria_copia_posicao(posicoes[primeiro_indice]), cria_copia_posicao(posicoes[i])
 
     return tuple(posicoes)
 
@@ -446,8 +445,7 @@ def cria_prado(ultima_posicao, rochedos, animais, posicoes_animais):
             if esta_fora_limite_prado(prado, posicao) or prado[obter_pos_y(posicao)][obter_pos_x(posicao)] != ".":
                 argumentos_invalidos("cria_prado")
 
-            prado[obter_pos_y(posicao)][obter_pos_x(posicao)
-                                        ] = cria_copia_animal(animais[i])
+            prado[obter_pos_y(posicao)][obter_pos_x(posicao)] = cria_copia_animal(animais[i])
 
         return prado
 
@@ -638,8 +636,7 @@ def prado_para_str(prado):
             elif eh_posicao_obstaculo(prado, cria_posicao(x, y)):
                 result += "@"
             else:
-                result += animal_para_char(obter_animal(prado,
-                                           cria_posicao(x, y)))
+                result += animal_para_char(obter_animal(prado,cria_posicao(x, y)))
         if y != max_y-1:
             result += "\n"
     return result
@@ -660,7 +657,6 @@ def obter_movimento(prado, posicao):
 
     Devolve a posição seguinte do animal que se encontra na posição recebida.
     '''
-    posicao_nova = cria_copia_posicao(posicao)
     valor_numerico = obter_valor_numerico(prado, posicao)
     posicoes_adjacentes = obter_posicoes_adjacentes(posicao)
     movimentos = ()
@@ -674,16 +670,15 @@ def obter_movimento(prado, posicao):
             if eh_posicao_livre(prado, posicao_adjacente):
                 movimentos += (cria_copia_posicao(posicao_adjacente),)
     if len(movimentos):
-        posicao_nova = cria_copia_posicao(
-            movimentos[valor_numerico % len(movimentos)])
-    return posicao_nova
+        return cria_copia_posicao(movimentos[valor_numerico % len(movimentos)])
+    return posicao
 
 
 def posicao_no_tuplo(posicao, tuplo_posicoes):
     '''
-    posicao_na_lista: posicao x tuplo posicoes -> booleano
+    posicao_na_lista: posicao x lista posicoes -> booleano
 
-    Devolve True caso a posição esteja contida no tuplo de posições.
+    Devolve True caso a posição esteja contida na lista de posições.
     Caso contrário, devolve False.
     '''
     for posi in tuplo_posicoes:
@@ -720,10 +715,9 @@ def geracao(prado):
                     prado = inserir_animal(prado, animal_novo, posicao)
 
                 if eh_animal_faminto(animal):
-                    eliminar_animal(prado, posicao_nova)
+                    prado = eliminar_animal(prado, posicao_nova)
                 else:
-                    posicoes_movimentadas += (cria_copia_posicao(posicao_nova),)
-
+                    posicoes_movimentadas += ((cria_copia_posicao(posicao_nova)),)
             elif eh_animal_faminto(animal):
                 prado = eliminar_animal(prado, posicao)
 
@@ -763,10 +757,8 @@ def get_animais_e_posicoes(linhas):
     posicoes_animais = ()
     for linha in linhas:
         animal_e_posicao = eval(linha)
-        posicoes_animais += (cria_posicao(
-            animal_e_posicao[-1][0], animal_e_posicao[-1][1]),)
-        animais += (cria_animal(animal_e_posicao[0],
-                    animal_e_posicao[1], animal_e_posicao[2]),)
+        posicoes_animais += (cria_posicao(animal_e_posicao[-1][0], animal_e_posicao[-1][1]),)
+        animais += (cria_animal(animal_e_posicao[0],animal_e_posicao[1], animal_e_posicao[2]),)
     return animais, posicoes_animais
 
 

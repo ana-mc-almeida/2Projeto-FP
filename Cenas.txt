@@ -7,10 +7,10 @@ AINDA TENHO DE FAZER:
     Doc_strings de váaaarias
 
 ANTES DE SUBMTER: 
-    Verificar que a linha "posicoes[i], posicoes[primeiro_indice] = cria_copia_posicao(posicoes[primeiro_indice]), cria_copia_posicao(posicoes[i])" está seguida
-    Verificar que a linha "prado[obter_pos_y(posicao)][obter_pos_x(posicao)] = cria_copia_animal(animais[i])" está seguida
-    Verificar que a linha "result += animal_para_char(obter_animal(prado,cria_posicao(x, y)))" está seguida
-    Verificar que a linha "posicao_nova = cria_copia_posicao(movimentos[valor_numerico % len(movimentos)])" está seguida
+    -----Verificar que a linha "posicoes[i], posicoes[primeiro_indice] = cria_copia_posicao(posicoes[primeiro_indice]), cria_copia_posicao(posicoes[i])" está seguida
+    -----Verificar que a linha "prado[obter_pos_y(posicao)][obter_pos_x(posicao)] = cria_copia_animal(animais[i])" está seguida
+    -----Verificar que a linha "result += animal_para_char(obter_animal(prado,cria_posicao(x, y)))" está seguida
+    -----Verificar que a linha "posicao_nova = cria_copia_posicao(movimentos[valor_numerico % len(movimentos)])" está seguida
 
     posicoes_animais += (cria_posicao(animal_e_posicao[-1][0], animal_e_posicao[-1][1]),)
         animais += (cria_animal(tudo[0], animal_e_posicao[1], animal_e_posicao[2]),)
