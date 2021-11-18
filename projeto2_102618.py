@@ -692,14 +692,12 @@ def posicao_no_tuplo(posicao, tuplo_posicoes):
     return False
 
 
-def geracao(prado_recebido):
+def geracao(prado):
     '''
     geracao: prado -> prado
 
     Devolve o prado, após a sua evolução (correspondente a uma geração).
     '''
-    prado = cria_copia_prado(prado_recebido)
-
     posicoes_movimentadas = ()
     posicoes_animais = obter_posicao_animais(prado)
 
