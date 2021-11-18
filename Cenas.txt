@@ -14,7 +14,7 @@ DÚVIDAS:
     R - "obter_animal" só pode dar return num animal? e se for um rochedo? 
 
 ERROS EXECUÇÃO 17_11 (3):
-    119 cria_prado -> verificar que não há duas rochas no mesmo sítio nem dois animais
+        119 cria_prado -> verificar que não há duas rochas no mesmo sítio nem dois animais
     224
     225
 
