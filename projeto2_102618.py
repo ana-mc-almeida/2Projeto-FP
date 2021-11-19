@@ -34,6 +34,9 @@ def is_int_positivo_ou_0(num):
     return type(num) == int and num >= 0
 
 
+# TAD posicao
+# R[posicao] = (x,y)
+
 def cria_posicao(x, y):
     '''
     cria_posicao: int x int -> posicao
@@ -149,6 +152,9 @@ def valida_cria_animal(especie, freq_reproducao, freq_alimentacao):
     '''
     return is_str_n_nula(especie) and type(freq_reproducao) == int and freq_reproducao > 0 and is_int_positivo_ou_0(freq_alimentacao)
 
+
+# TAD animal
+# R[animal] = {"especie": especie, "idade":0, "freq_alimentacao": freq_alimentacao, "fome": fome, "freq_reproducao": freq_reproducao}
 
 def cria_animal(especie, freq_reproducao, freq_alimentacao):
     '''
@@ -371,6 +377,9 @@ def reproduz_animal(animal):
     return novo_animal
 
 
+# TAD prado
+# R[prado] = [[],[],[],[]]
+
 def obter_tamanho_x(prado):
     '''
     obter_tamanho_x: prado -> int
@@ -589,11 +598,11 @@ def eh_posicao_obstaculo(prado, posicao):
     eh_posicao_obstaculo: prado x posicao -> booleano
 
     Devolve True caso a posição dada do prado seja um rochedo.
-    Caso contrário, devolve False.
+    Caso contrário, devolve False
     '''
     if esta_fora_limite_prado(prado, posicao):
         return True
-    return obter_animal(prado, posicao) == "r"
+    return prado[obter_pos_y(posicao)][obter_pos_x(posicao)] == "r"
 
 
 def eh_posicao_livre(prado, posicao):
@@ -664,11 +673,11 @@ def obter_movimento(prado, posicao):
     if eh_predador(obter_animal(prado, posicao)):
         for posicao_adjacente in posicoes_adjacentes:
             if eh_presa(obter_animal(prado, posicao_adjacente)):
-                movimentos += (cria_copia_posicao(posicao_adjacente),)
+                movimentos = movimentos + (cria_copia_posicao(posicao_adjacente),)
     if not len(movimentos):  # significa que a posição dada tem uma presa ou não tem presas à volta
         for posicao_adjacente in posicoes_adjacentes:
             if eh_posicao_livre(prado, posicao_adjacente):
-                movimentos += (cria_copia_posicao(posicao_adjacente),)
+                movimentos = movimentos + (cria_copia_posicao(posicao_adjacente),)
     if len(movimentos):
         return cria_copia_posicao(movimentos[valor_numerico % len(movimentos)])
     return posicao
@@ -819,3 +828,4 @@ def simula_ecossistema(ficheiro, geracoes, verboso):
         mostra_geracao(prado, g)
 
     return (obter_numero_predadores(prado), obter_numero_presas(prado))
+
